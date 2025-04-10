@@ -1,0 +1,4 @@
+#ifndef _MESH_ADDR_MAP_INCLUDE_GUARD_
+#define _MESH_ADDR_MAP_INCLUDE_GUARD_
+
+#endif
