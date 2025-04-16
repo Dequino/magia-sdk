@@ -1,4 +1,14 @@
 #ifndef _MESH_ADDR_MAP_INCLUDE_GUARD_
 #define _MESH_ADDR_MAP_INCLUDE_GUARD_
 
+
+#define MESH_CTRL_BASE 0x
+
+#define MESH_BASE 0x
+
+#define MESH_NUMTILES 2
+
+#define NUM_CLUSTER_CORES (MESH_NUMTILES)
+
+
 #endif

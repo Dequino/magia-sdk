@@ -1,6 +1,7 @@
 #include "config_magiaMesh.h"
 
 #include "addr_map.h"
+#include "mesh.h"
 
 #include <stdint.h>
 #include <stddef.h>
@@ -15,5 +16,17 @@
  * @param mesh_id ID of the mesh to wait for.
  */
  void config_magiaMesh(uint8_t mesh_id) {
+    volatile uint32_t *busyRegAddr;
+    volatile int32_t *returnRegAddr;
+
+    busyRegAddr = (volatile uint32_t *)(MESH_CTRL_BASE + MAGIA_MESH_BUSY_REG_OFFSET);
+    returnRegAddr = (volatile int32_t *)(MESH_CTRL_BASE + MAGIA_MESH_RETURN_REG_OFFSET);
+
+    // Reset busy register
+    *busyRegAddr = 0;
+
+    // Reset return register
+    *returnRegAddr = 0;
+
     return;
 }
