@@ -1,5 +1,5 @@
 set(AVAILABLE_TARGETS
-  "magia"
+  "magia-2x2"
   CACHE STRING "Available Targets"
 )
 
@@ -11,6 +11,6 @@ endif()
 
 message(STATUS "[MAGIA-SDK] TARGET_PLATFORM       : ${TARGET_PLATFORM}")
 
-if (TARGET_PLATFORM STREQUAL "magia")
-  add_subdirectory(magia)
+if (TARGET_PLATFORM STREQUAL "magia-2x2")
+  add_subdirectory(magia-2x2)
 endif()

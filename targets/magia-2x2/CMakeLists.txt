@@ -65,14 +65,14 @@ target_compile_options(runtime_mesh_magia
 
 target_compile_options(runtime_mesh_magia
   PUBLIC
-  -march=${ISA_CLUSTER_PULP}
+  -march=${ISA_MESH}
   -mabi=${ABI}
 )
 
 # WIESEP: Expose common link option
 target_link_options(runtime_mesh_magia
   PUBLIC
-  -march=${ISA_CLUSTER_PULP}
+  -march=${ISA_MESH}
   -mabi=${ABI}
   -nostartfiles
   -ffreestanding

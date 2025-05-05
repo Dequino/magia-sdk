@@ -6,9 +6,9 @@
 
 #define MESH_BASE 0x
 
-#define MESH_NUMTILES 2
+#define MESH_NUMTILES 4
 
-#define NUM_CLUSTER_CORES (MESH_NUMTILES)
+#define NUM_MESH_TILES (MESH_NUMTILES)
 
 
 #endif

@@ -1,6 +1,6 @@
 # Define mappings for devices
 set(DEVICE_MAPPINGS
-    magia:magia_mesh
+    magia-2x2:magia_mesh_2x2
 )
 
 # Call the macro

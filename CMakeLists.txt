@@ -74,14 +74,14 @@ if(NOT TEST_MODE IN_LIST VALID_TEST_MODES)
     message(FATAL_ERROR "${error_message}")
 endif()
 
-set(SOC_MODEL_BINARY "magia.bin" CACHE STRING "Path to the simulation binary")
+set(NOC_MODEL_BINARY "magia.bin" CACHE STRING "Path to the simulation binary")
 set(PRELOAD_MODE "0" CACHE STRING "Preload mode for simulation")
 
 if (TEST_MODE STREQUAL "simulation")
     enable_testing()
 
-    if(NOT EXISTS ${SOC_MODEL_BINARY})
-        message(FATAL_ERROR "SoC model binary ${SOC_MODEL_BINARY} does not exist.")
+    if(NOT EXISTS ${NOC_MODEL_BINARY})
+        message(FATAL_ERROR "NoC model binary ${NOC_MODEL_BINARY} does not exist.")
     endif()
 
     # Convert PRELOAD_MODE to integer
@@ -91,7 +91,7 @@ if (TEST_MODE STREQUAL "simulation")
         message(FATAL_ERROR "PRELOAD_MODE must be an integer.")
     endif()
 
-    message(STATUS "[MAGIA-SDK] SoC Model Binary      : ${SOC_MODEL_BINARY}")
+    message(STATUS "[MAGIA-SDK] NoC Model Binary      : ${NOC_MODEL_BINARY}")
     message(STATUS "[MAGIA-SDK] Preload Mode          : ${PRELOAD_MODE}")
 endif()
 

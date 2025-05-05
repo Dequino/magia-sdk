@@ -1,6 +1,6 @@
 # Define mappings for drivers
 set(DRIVER_MAPPINGS
-    magia:magia_mesh
+    magia-2x2:magia_mesh_2x2
 )
 
 # Call the macro

@@ -7,6 +7,6 @@
 
 #define BOOT_ADDR_TILE_0_OFFSET  (PERIPH_OFFSET + 0x)
 
-'''Need to find a way to define dynamically the boot addr of N tiles.'''
+
 
 #endif
