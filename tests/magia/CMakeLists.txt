@@ -1,2 +1,2 @@
-# Add test for pulpCluster
-add_subdirectory(magiaMesh)
+# Add test
+add_subdirectory(mesh)

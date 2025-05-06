@@ -1,6 +1,6 @@
 # Define mappings for tests
 set(TEST_MAPPINGS
-    magia:magia
+    magia-2x2:magia
 )
 
 # Call the macro

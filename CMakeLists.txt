@@ -22,11 +22,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 project(magia-sdk LANGUAGES C ASM)
 
 set(ABI ilp32)
-set(ISA_MESH rv32imac)
+set(ISA rv32ima)
 
 
 message(STATUS "[MAGIA-SDK] ABI                     : ${ABI}")
-message(STATUS "[MAGIA-SDK] ISA_MESH                : ${ISA_MESH}")
+message(STATUS "[MAGIA-SDK] ISA                     : ${ISA}")
 if (${DISASSEMBLE_LIBRARIES})
     message(STATUS "[MAGIA-SDK] DISASSEMBLE_LIBRARIES : ON")
 else()
@@ -74,7 +74,7 @@ if(NOT TEST_MODE IN_LIST VALID_TEST_MODES)
     message(FATAL_ERROR "${error_message}")
 endif()
 
-set(NOC_MODEL_BINARY "magia.bin" CACHE STRING "Path to the simulation binary")
+set(NOC_MODEL_BINARY "" CACHE STRING "Path to the simulation binary")
 set(PRELOAD_MODE "0" CACHE STRING "Preload mode for simulation")
 
 if (TEST_MODE STREQUAL "simulation")
