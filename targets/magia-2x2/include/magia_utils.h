@@ -3,20 +3,6 @@
 
 #include "magia_tile_utils.h"
 
-#define STR_OFFSET  (0x00000000)
-#define STR_BASE    (RESERVED_START + STR_OFFSET)
-#define SYNC_OFFSET (0x0000F000)
-#define SYNC_BASE   (RESERVED_START + SYNC_OFFSET)
-#define SYNC_EN     (SYNC_BASE + 0x4)
-
-#define MESH_X_TILES (2)
-#define MESH_Y_TILES (2)
-#define NUM_HARTS    (MESH_X_TILES*MESH_Y_TILES)
-
-#define GET_X_ID(mhartid)  (mhartid/MESH_Y_TILES)
-#define GET_Y_ID(mhartid)  (mhartid%MESH_Y_TILES)
-#define GET_ID(y_id, x_id) ((x_id*MESH_Y_TILES)+y_id)
-
 #define h_pprintf(x) (h_psprint(get_hartid(), x))
 #define n_pprintf(x) (n_psprint(get_hartid(), x))
 #define   pprintf(x) (  psprint(get_hartid(), x))

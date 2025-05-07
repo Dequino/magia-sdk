@@ -46,7 +46,7 @@ add_subdirectory(targets)
 # Include other subdirectories
 add_subdirectory(hal)
 add_subdirectory(devices)
-add_subdirectory(drivers)
+# add_subdirectory(drivers)
 
 ################################################################################
 # Testing                                                                      #

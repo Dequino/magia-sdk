@@ -6,7 +6,5 @@ add_library(hal_host STATIC ${SOURCES})
 
 target_include_directories(hal_host
   PUBLIC
-  "inc/fync"
-  "inc/idma"
-  "inc/redmule"
+  "include"
 )
