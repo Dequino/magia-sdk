@@ -31,4 +31,4 @@
 #define GET_Y_ID(mhartid)  (mhartid/MESH_Y_TILES)
 #define GET_ID(y_id, x_id) ((y_id*MESH_Y_TILES)+x_id)
 
-#endif
+#endif // _TILE_ADDR_MAP_INCLUDE_GUARD_

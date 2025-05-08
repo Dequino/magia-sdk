@@ -1,3 +1,11 @@
+# Copyright 2024 ETH Zurich and University of Bologna.
+# Licensed under the Apache License, Version 2.0, see LICENSE for details.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Moritz Scherer <scheremo@iis.ee.ethz.ch>
+# Viviane Potocnik <vivianep@iis.ee.ethz.ch>
+# Philip Wiese <wiesep@iis.ee.ethz.ch>
+
 add_library(runtime STATIC)
 
 file(GLOB_RECURSE ASM_SOURCES
@@ -16,7 +24,6 @@ target_sources(runtime
   ${C_SOURCES}
 )
 
-# WIESEP: Export the target specific include directory
 target_include_directories(runtime
   PUBLIC
   ${CMAKE_CURRENT_LIST_DIR}/include
