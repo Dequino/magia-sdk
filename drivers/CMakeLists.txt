@@ -1,6 +1,6 @@
 # Define mappings for drivers
 set(DRIVER_MAPPINGS
-    magia-2x2:
+    magia-2x2:idma32
 )
 
 # Call the macro
