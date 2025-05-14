@@ -5,7 +5,10 @@
 // Viviane Potocnik <vivianep@iis.ee.ethz.ch>
 // Alberto Dequino <alberto.dequino@unibo.it>
 //
+// This file provides the strong (driver-specific) implementations for the
+// IDMA functions using a 32-bit representation (a struct with 'low' and 'high').
 // These functions override the weak HAL symbols.
+// This is a WIP and might be redundant, as the moment of writing there is only one IDMA configuration tested on MAGIA.
 
 
 #include "idma32.h"
@@ -18,8 +21,64 @@ static int idma32_init(idma_controller_t *ctrl) {
     return 0;
 }
 
+/**
+ * Start 1-dimensional memory copy
+ *
+ * @param dir Copy Direction. 0 = AXI to OBI (L2 to L1), !0 = OBI to AXI (L1 to L2).
+ * @param axi_addr AXI/L2 memory address of first element.
+ * @param obi_addr OBI/L1 memory address of first element.
+ * @param len Byte length of memory block to transfer.
+ */
+static int idma32_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len){
+    if(dir){ // OBI to AXI (L1 to L2)
+        idma_conf_out();
+        idma_set_addr_len_out(axi_addr, obi_addr, len);
+        idma_set_std2_rep2_out(0, 0, 1);
+        idma_set_std3_rep3_out(0, 0, 1);
+        idma_start_out();
+    }
+    else{ // AXI to OBI (L2 to L1)
+        idma_conf_in();
+        idma_set_addr_len_in(obi_addr, axi_addr, len);
+        idma_set_std2_rep2_in(0, 0, 1);
+        idma_set_std3_rep3_in(0, 0, 1);
+        idma_start_in();
+    }
+    return 0;
+}
 
-/* Export the CLINT-specific interrupt API */
+/**
+ * Start 2-dimensional memory copy.
+ *
+ * @param dir Copy Direction. 0 = AXI to OBI (L2 to L1), !0 = OBI to AXI (L1 to L2).
+ * @param axi_addr AXI/L2 memory address of first element.
+ * @param obi_addr OBI/L1 memory address of first element.
+ * @param len Byte length of memory block to transfer for each repetition.
+ * @param std Offset to add to the memory address (axi_addr or obi_addr) to calculate the start of the next memory block.
+ * @param reps Number of repetitions.
+ */
+static int idma32_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps){
+    if(dir){ // OBI to AXI (L1 to L2)
+        idma_conf_out();
+        idma_set_addr_len_out(axi_addr, obi_addr, len);
+        idma_set_std2_rep2_out(len, std, reps);
+        idma_set_std3_rep3_out(0, 0, 1);
+        idma_start_out();
+    }
+    else{ // AXI to OBI (L2 to L1)
+        idma_conf_in();
+        idma_set_addr_len_in(obi_addr, axi_addr, len);
+        idma_set_std2_rep2_in(len, std, reps);
+        idma_set_std3_rep3_in(0, 0, 1);
+        idma_start_in();
+    }
+    return 0;
+}
+
+
+/* Export the IDMA-specific controller API */
 idma_controller_api_t idma_api = {
     .init = idma32_init,
+    .memcpy_1d = idma32_memcpy_1d,
+    .memcpy_2d = idma32_memcpy_2d,
 };
