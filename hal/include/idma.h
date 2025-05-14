@@ -30,7 +30,8 @@ struct idma_controller {
  */
 struct idma_controller_api {
     int (init*)(idma_controller_t *ctrl);
-    int (memcpy*)(volatile uint8_t dir, volatile uint32_t dst_addr, volatile uint32_t src_addr, volatile uint32_t len);
+    int (memcpy_1d*)(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, volatile uint32_t len);
+    int (memcpy_2d*)(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps);
 };
 
 /*

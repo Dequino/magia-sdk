@@ -17,9 +17,21 @@ __attribute__((weak)) int idma_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_
     return 0;
 }
 
+__attribute__((weak)) int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps){
+    (void) dir;
+    (void) axi_addr;
+    (void) obi_addr;
+    (void) len;
+    (void) std;
+    (void) reps;
+    return 0;
+}
+
 /*----------------------------------------*/
 /* Export the controller API for the IDMA */
 /*----------------------------------------*/
 __attribute__((weak)) idma_controller_api_t idma_api = {
     .init = idma_init,
+    .memcpy_1d = idma_memcpy_1d;
+    .memcpy_2d = idma_memcpy_2d;
 };

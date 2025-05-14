@@ -21,6 +21,7 @@ struct redmule_controller {
  */
 struct redmule_controller_api {
     int (init*)(redmule_controller_t *ctrl);
+    int (gemm*)(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k);
 };
 
 /*
