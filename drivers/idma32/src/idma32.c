@@ -61,7 +61,7 @@ static int idma32_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, u
     if(dir){ // OBI to AXI (L1 to L2)
         idma_conf_out();
         idma_set_addr_len_out(axi_addr, obi_addr, len);
-        idma_set_std2_rep2_out(len, std, reps);
+        idma_set_std2_rep2_out(std, len, reps);
         idma_set_std3_rep3_out(0, 0, 1);
         idma_start_out();
     }

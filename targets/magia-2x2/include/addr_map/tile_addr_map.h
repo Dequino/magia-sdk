@@ -14,7 +14,7 @@
 #define L1_BASE        (0x00020000)
 #define L1_SIZE        (0x000E0000)
 #define L1_TILE_OFFSET (0x00100000)
-#define MHARTID_OFFSET (0x00010000)
+#define MHARTID_OFFSET (0x00100000)
 #define L2_BASE        (0xCC000000)
 #define TEST_END_ADDR  (0xCC030000)
 
