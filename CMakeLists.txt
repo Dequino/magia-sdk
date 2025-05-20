@@ -42,7 +42,7 @@ else()
     message(STATUS "[MAGIA-SDK] DISASSEMBLE_LIBRARIES : OFF")
 endif()
 
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/Utils.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/utils.cmake)
 
 ################################################################################
 # Add subdirectories                                                           #
