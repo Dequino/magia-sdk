@@ -31,7 +31,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 project(magia-sdk LANGUAGES C ASM)
 
 set(ABI ilp32)
-set(ISA rv32ima)
+set(ISA rv32imac)
 
 
 message(STATUS "[MAGIA-SDK] ABI                     : ${ABI}")
@@ -52,9 +52,13 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/Utils.cmake)
 # Depending on the target, following static libraries have to added by the targets
 add_subdirectory(targets)
 
+
+# VIVIANEP: Include the picolibc library
+include(${CMAKE_CURRENT_LIST_DIR}/cmake/picolibc.cmake)
+
 # Include other subdirectories
 add_subdirectory(hal)
-add_subdirectory(devices)
+# add_subdirectory(devices)
 add_subdirectory(drivers)
 
 ################################################################################
@@ -83,7 +87,7 @@ if(NOT TEST_MODE IN_LIST VALID_TEST_MODES)
     message(FATAL_ERROR "${error_message}")
 endif()
 
-set(NOC_MODEL_BINARY "" CACHE STRING "Path to the simulation binary")
+set(NOC_MODEL_BINARY "magia.bin" CACHE STRING "Path to the simulation binary")
 set(PRELOAD_MODE "0" CACHE STRING "Preload mode for simulation")
 
 if (TEST_MODE STREQUAL "simulation")
