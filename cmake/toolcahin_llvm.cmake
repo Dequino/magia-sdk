@@ -12,13 +12,13 @@ set(CMAKE_SYSTEM_NAME Generic)
 
 set(LLVM_TAG llvm)
 
-set(CMAKE_C_COMPILER ${TOOLCHAIN_DIR}/clang)
-set(CMAKE_CXX_COMPILER ${TOOLCHAIN_DIR}/clang++)
-set(CMAKE_ASM_COMPILER ${TOOLCHAIN_DIR}/clang)
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_CXX_COMPILER clang++)
+set(CMAKE_ASM_COMPILER clang)
 
-set(CMAKE_OBJCOPY ${TOOLCHAIN_DIR}/${LLVM_TAG}-objcopy)
-set(CMAKE_OBJDUMP ${TOOLCHAIN_DIR}/${LLVM_TAG}-objdump)
-set(CMAKE_AR ${TOOLCHAIN_DIR}/${LLVM_TAG}-ar)
+set(CMAKE_OBJCOPY ${LLVM_TAG}-objcopy)
+set(CMAKE_OBJDUMP ${LLVM_TAG}-objdump)
+set(CMAKE_AR ${LLVM_TAG}-ar)
 
 add_compile_options("--target=riscv32-unknown-elf")
 
