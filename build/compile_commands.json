@@ -1,0 +1,44 @@
+[
+{
+  "directory": "/srv/home/alberto.dequino/magia-sdk/build/targets/magia-2x2",
+  "command": "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc  -I/srv/home/alberto.dequino/magia-sdk/targets/magia-2x2/include -I/srv/home/alberto.dequino/magia-sdk/drivers -O2 -march=rv32imac -mabi=ilp32 -o CMakeFiles/runtime.dir/src/crt0.S.obj -c /srv/home/alberto.dequino/magia-sdk/targets/magia-2x2/src/crt0.S",
+  "file": "/srv/home/alberto.dequino/magia-sdk/targets/magia-2x2/src/crt0.S",
+  "output": "targets/magia-2x2/CMakeFiles/runtime.dir/src/crt0.S.obj"
+},
+{
+  "directory": "/srv/home/alberto.dequino/magia-sdk/build/hal",
+  "command": "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc  -I/srv/home/alberto.dequino/magia-sdk/hal/include -I/srv/home/alberto.dequino/magia-sdk/targets/magia-2x2/include -I/srv/home/alberto.dequino/magia-sdk/drivers/idma32/include -I/srv/home/alberto.dequino/magia-sdk/drivers -I/srv/home/alberto.dequino/magia-sdk/drivers/redmule16/include -std=gnu99 -march=rv32imac -mabi=ilp32 -o CMakeFiles/hal.dir/src/fsync.c.obj -c /srv/home/alberto.dequino/magia-sdk/hal/src/fsync.c",
+  "file": "/srv/home/alberto.dequino/magia-sdk/hal/src/fsync.c",
+  "output": "hal/CMakeFiles/hal.dir/src/fsync.c.obj"
+},
+{
+  "directory": "/srv/home/alberto.dequino/magia-sdk/build/hal",
+  "command": "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc  -I/srv/home/alberto.dequino/magia-sdk/hal/include -I/srv/home/alberto.dequino/magia-sdk/targets/magia-2x2/include -I/srv/home/alberto.dequino/magia-sdk/drivers/idma32/include -I/srv/home/alberto.dequino/magia-sdk/drivers -I/srv/home/alberto.dequino/magia-sdk/drivers/redmule16/include -std=gnu99 -march=rv32imac -mabi=ilp32 -o CMakeFiles/hal.dir/src/idma.c.obj -c /srv/home/alberto.dequino/magia-sdk/hal/src/idma.c",
+  "file": "/srv/home/alberto.dequino/magia-sdk/hal/src/idma.c",
+  "output": "hal/CMakeFiles/hal.dir/src/idma.c.obj"
+},
+{
+  "directory": "/srv/home/alberto.dequino/magia-sdk/build/hal",
+  "command": "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc  -I/srv/home/alberto.dequino/magia-sdk/hal/include -I/srv/home/alberto.dequino/magia-sdk/targets/magia-2x2/include -I/srv/home/alberto.dequino/magia-sdk/drivers/idma32/include -I/srv/home/alberto.dequino/magia-sdk/drivers -I/srv/home/alberto.dequino/magia-sdk/drivers/redmule16/include -std=gnu99 -march=rv32imac -mabi=ilp32 -o CMakeFiles/hal.dir/src/redmule.c.obj -c /srv/home/alberto.dequino/magia-sdk/hal/src/redmule.c",
+  "file": "/srv/home/alberto.dequino/magia-sdk/hal/src/redmule.c",
+  "output": "hal/CMakeFiles/hal.dir/src/redmule.c.obj"
+},
+{
+  "directory": "/srv/home/alberto.dequino/magia-sdk/build/drivers/idma32",
+  "command": "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc  -I/srv/home/alberto.dequino/magia-sdk/hal/include -I/srv/home/alberto.dequino/magia-sdk/targets/magia-2x2/include -I/srv/home/alberto.dequino/magia-sdk/drivers/idma32/include -I/srv/home/alberto.dequino/magia-sdk/drivers -std=gnu99 -march=rv32imac -mabi=ilp32 -o CMakeFiles/idma_lib.dir/src/idma32.c.obj -c /srv/home/alberto.dequino/magia-sdk/drivers/idma32/src/idma32.c",
+  "file": "/srv/home/alberto.dequino/magia-sdk/drivers/idma32/src/idma32.c",
+  "output": "drivers/idma32/CMakeFiles/idma_lib.dir/src/idma32.c.obj"
+},
+{
+  "directory": "/srv/home/alberto.dequino/magia-sdk/build/drivers/redmule16",
+  "command": "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc  -I/srv/home/alberto.dequino/magia-sdk/hal/include -I/srv/home/alberto.dequino/magia-sdk/targets/magia-2x2/include -I/srv/home/alberto.dequino/magia-sdk/drivers/redmule16/include -I/srv/home/alberto.dequino/magia-sdk/drivers -std=gnu99 -march=rv32imac -mabi=ilp32 -o CMakeFiles/redmule_lib.dir/src/redmule16.c.obj -c /srv/home/alberto.dequino/magia-sdk/drivers/redmule16/src/redmule16.c",
+  "file": "/srv/home/alberto.dequino/magia-sdk/drivers/redmule16/src/redmule16.c",
+  "output": "drivers/redmule16/CMakeFiles/redmule_lib.dir/src/redmule16.c.obj"
+},
+{
+  "directory": "/srv/home/alberto.dequino/magia-sdk/build/tests/magia-2x2/mesh/mesh_test",
+  "command": "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc  -I/srv/home/alberto.dequino/magia-sdk/tests/magia-2x2/mesh/mesh_test/include -I/srv/home/alberto.dequino/magia-sdk/targets/magia-2x2/include -I/srv/home/alberto.dequino/magia-sdk/drivers -I/srv/home/alberto.dequino/magia-sdk/hal/include -std=gnu99 -O2 -march=rv32imac -mabi=ilp32 -o CMakeFiles/test_magiaMesh_lib.dir/src/test.c.obj -c /srv/home/alberto.dequino/magia-sdk/tests/magia-2x2/mesh/mesh_test/src/test.c",
+  "file": "/srv/home/alberto.dequino/magia-sdk/tests/magia-2x2/mesh/mesh_test/src/test.c",
+  "output": "tests/magia-2x2/mesh/mesh_test/CMakeFiles/test_magiaMesh_lib.dir/src/test.c.obj"
+}
+]

@@ -16,3 +16,9 @@ target_include_directories(hal
   PUBLIC
   "include"
 )
+
+target_link_libraries(hal
+  PRIVATE
+    "$<LINK_LIBRARY:WHOLE_ARCHIVE,idma_lib>"
+    "$<LINK_LIBRARY:WHOLE_ARCHIVE,redmule_lib>"
+)

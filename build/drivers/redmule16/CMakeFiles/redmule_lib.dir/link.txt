@@ -1,0 +1,2 @@
+riscv32-unknown-elf-ar qc ../../lib/libredmule_lib.a CMakeFiles/redmule_lib.dir/src/redmule16.c.obj
+/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-ranlib ../../lib/libredmule_lib.a

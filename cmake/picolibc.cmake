@@ -7,22 +7,17 @@
 
 include(ExternalProject)
 
-message(STATUS "[MAGIA-SDK] Setting up picolibc for Host (ISA: ${ISA_HOST}, ABI: ${ABI})")
+message(STATUS "[MAGIA-SDK] Setting up picolibc for Host (ISA: ${ISA}, ABI: ${ABI})")
 
 set(CROSS_C_COMPILER "${CMAKE_C_COMPILER}")
-set(CROSS_C_COMPILER_ARGS "-target ${CROSS_COMPILE_HOST} -march=${ISA_HOST} -nostdlib" CACHE STRING "Compiler arguments (Host)")
+set(CROSS_C_COMPILER_ARGS "-target ${CROSS_COMPILE} -march=${ISA} -nostdlib" CACHE STRING "Compiler arguments")
 # VIVIANEP: These flags are only for building Picolibc; adding them globally breaks
 #           app builds (e.g., missing <sys/types.h>) or causes issues in freestanding mode.
-set(CROSS_C_ARGS "-Werror=double-promotion -Wno-unsupported-floating-point-opt -fshort-enums ${CMAKE_ALT_C_OPTIONS} -march=${ISA_HOST} -mabi=${ABI}")
-set(CROSS_C_LINK_ARGS "-Wl,-z,noexecstack -march=${ISA_HOST} -mabi=${ABI}")
+set(CROSS_C_ARGS "-Werror=double-promotion -Wno-unsupported-floating-point-opt -fshort-enums ${CMAKE_ALT_C_OPTIONS} -march=${ISA} -mabi=${ABI}")
+set(CROSS_C_LINK_ARGS "-Wl,-z,noexecstack -march=${ISA} -mabi=${ABI}")
 
 set(CROSS_AR "${CMAKE_AR}")
 set(CROSS_STRIP "${CMAKE_STRIP}")
-
-set(CROSS_CPU "${HOST_ARCH}")
-set(CROSS_CPU_FAMILY "${HOST_FAMILY}")
-set(CROSS_ENDIAN "${HOST_ENDIAN}")
-set(CROSS_SYSTEM "${HOST_SYSTEM}")
 
 set(CROSS_SKIP_SANITY_CHECK "true")
 
@@ -43,9 +38,9 @@ prepare_meson_array(CROSS_C_LINK_ARGS_LIST "${CROSS_C_LINK_ARGS}")
 
 set(PICOLIBC_SRC_DIR ${CMAKE_BINARY_DIR}/picolibc-src)
 
-set(PICOLIBC_BUILD_DIR ${CMAKE_BINARY_DIR}/picolibc-build-${ISA_HOST}-${ABI})
-set(PICOLIBC_INSTALL_DIR ${CMAKE_BINARY_DIR}/picolibc-install-${ISA_HOST}-${ABI})
-set(PICOLIBC_CROSS_FILE ${CMAKE_BINARY_DIR}/picolibc-cross-file-${ISA_HOST}-${ABI}.txt)
+set(PICOLIBC_BUILD_DIR ${CMAKE_BINARY_DIR}/picolibc-build-${ISA}-${ABI})
+set(PICOLIBC_INSTALL_DIR ${CMAKE_BINARY_DIR}/picolibc-install-${ISA}-${ABI})
+set(PICOLIBC_CROSS_FILE ${CMAKE_BINARY_DIR}/picolibc-cross-file-${ISA}-${ABI}.txt)
 
 
 # Generate the Meson cross-file
@@ -54,7 +49,7 @@ configure_file(${CMAKE_CURRENT_LIST_DIR}/../scripts/picolibc-cross-file.txt.in $
 message(STATUS "[MAGIA-SDK] Saving cross compilation file to ${PICOLIBC_CROSS_FILE}")
 # Add picolibc as an external project
 ExternalProject_Add(
-    picolibc-${ISA_HOST}-${ABI}
+    picolibc-${ISA}-${ABI}
     GIT_REPOSITORY https://github.com/picolibc/picolibc.git
     GIT_TAG main
     SOURCE_DIR ${PICOLIBC_SRC_DIR}
@@ -69,7 +64,7 @@ ExternalProject_Add(
     LOG_INSTALL ON
 )
 
-set(PICOLIBC_TARGET picolibc-${ISA_HOST}-${ABI})
+set(PICOLIBC_TARGET picolibc-${ISA}-${ABI})
 
 add_library(picolibc STATIC IMPORTED GLOBAL)
 

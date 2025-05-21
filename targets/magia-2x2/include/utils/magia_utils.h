@@ -2,6 +2,7 @@
 #define MAGIA_UTILS_H
 
 #include "magia_tile_utils.h"
+#include "addr_map/tile_addr_map.h"
 
 #define h_pprintf(x) (h_psprint(get_hartid(), x))
 #define n_pprintf(x) (n_psprint(get_hartid(), x))

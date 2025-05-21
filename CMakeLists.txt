@@ -16,12 +16,20 @@ set(CMAKE_C_COMPILER_WORKS 1)
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
 
+set(CMAKE_EXE_LINKER_FLAGS_INIT "--specs=nosys.specs")
+set(CMAKE_LINK_LIBRARY_USING_WHOLE_ARCHIVE 
+"-Wl,--whole-archive <LIBRARY> -Wl,--no-whole-archive"
+)
+set(CMAKE_LINK_LIBRARY_USING_WHOLE_ARCHIVE_SUPPORTED True)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 
 if (COMPILER STREQUAL "GCC")
     set(CMAKE_TOOLCHAIN_FILE cmake/toolchain_gcc.cmake)
-else ()
+elseif (COMPILER STREQUAL "LLVM")
     set(CMAKE_TOOLCHAIN_FILE cmake/toolchain_llvm.cmake)
+else()
+    message(FATAL_ERROR "Compiler option not supported or set. Supported options are GCC and LLVM")
 endif ()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -52,9 +60,10 @@ include(${CMAKE_CURRENT_LIST_DIR}/cmake/utils.cmake)
 # Depending on the target, following static libraries have to added by the targets
 add_subdirectory(targets)
 
-
-# VIVIANEP: Include the picolibc library
-include(${CMAKE_CURRENT_LIST_DIR}/cmake/picolibc.cmake)
+if (COMPILER STREQUAL "LLVM")
+    # VIVIANEP: Include the picolibc library
+    include(${CMAKE_CURRENT_LIST_DIR}/cmake/picolibc.cmake)
+endif()
 
 # Include other subdirectories
 add_subdirectory(hal)

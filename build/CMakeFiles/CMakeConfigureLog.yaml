@@ -1,0 +1,146 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineSystem.cmake:199 (message)"
+      - "CMakeLists.txt:39 (project)"
+    message: |
+      The target system is: Generic -  - 
+      The host system is: Linux - 4.18.0-553.40.1.el8_10.x86_64 - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:39 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+      Compiler: /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      1
+      /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/bin/ld: cannot open linker script file riscv.ld: No such file or directory
+      collect2: error: ld returned 1 exit status
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/share/cmake/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:39 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc 
+      Build flags: 
+      Id flags: -c 
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CMakeCCompilerId.o"
+      
+      The C compiler identification is GNU, found in:
+        /srv/home/alberto.dequino/magia-sdk/build/CMakeFiles/3.26.5/CompilerIdC/CMakeCCompilerId.o
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerId.cmake:1102 (message)"
+      - "/usr/share/cmake/Modules/CMakeDetermineASMCompiler.cmake:127 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "CMakeLists.txt:39 (project)"
+    message: |
+      Checking whether the ASM compiler is GNU using "--version" matched "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      riscv32-unknown-elf-gcc (GCC) 7.1.1 20170509
+      Copyright (C) 2017 Free Software Foundation, Inc.
+      This is free software; see the source for copying conditions.  There is NO
+      warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "/usr/share/cmake/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:39 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/srv/home/alberto.dequino/magia-sdk/build/CMakeFiles/CMakeScratch/TryCompile-IgplZA"
+      binary: "/srv/home/alberto.dequino/magia-sdk/build/CMakeFiles/CMakeScratch/TryCompile-IgplZA"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: "--specs=nosys.specs"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: /srv/home/alberto.dequino/magia-sdk/build/CMakeFiles/CMakeScratch/TryCompile-IgplZA
+        
+        Run Build Command(s):/usr/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_df9be/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_df9be.dir/build.make CMakeFiles/cmTC_df9be.dir/build
+        gmake[1]: Entering directory '/srv/home/alberto.dequino/magia-sdk/build/CMakeFiles/CMakeScratch/TryCompile-IgplZA'
+        Building C object CMakeFiles/cmTC_df9be.dir/CMakeCCompilerABI.c.obj
+        /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc   -std=gnu99   -v -o CMakeFiles/cmTC_df9be.dir/CMakeCCompilerABI.c.obj -c /usr/share/cmake/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc
+        Target: riscv32-unknown-elf
+        Configured with: /srv/home/francesco.conti9/Devel/pulp-riscv-gnu-toolchain/riscv-gcc/configure --target=riscv32-unknown-elf --prefix=/sw/tool/riscv/gcc7 --disable-shared --disable-threads --enable-languages=c,c++ --with-system-zlib --enable-tls --with-newlib --with-headers=/sw/tool/riscv/gcc7/riscv32-unknown-elf/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --enable-checking=yes --enable-multilib --with-abi=ilp32 --with-arch=rv32imc 'CFLAGS_FOR_TARGET=-Os  -mcmodel=medlow'
+        Thread model: single
+        gcc version 7.1.1 20170509 (GCC) 
+        COLLECT_GCC_OPTIONS='-std=gnu99' '-v' '-o' 'CMakeFiles/cmTC_df9be.dir/CMakeCCompilerABI.c.obj' '-c' '-march=rv32imc' '-mabi=ilp32'
+         /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../libexec/gcc/riscv32-unknown-elf/7.1.1/cc1 -quiet -v -iprefix /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/ /usr/share/cmake/Modules/CMakeCCompilerABI.c -quiet -dumpbase CMakeCCompilerABI.c -march=rv32imc -mabi=ilp32 -auxbase-strip CMakeFiles/cmTC_df9be.dir/CMakeCCompilerABI.c.obj -std=gnu99 -version -o /tmp/ccEP6mAv.s
+        GNU C99 (GCC) version 7.1.1 20170509 (riscv32-unknown-elf)
+        	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-23), GMP version 6.1.2, MPFR version 3.1.6-p2, MPC version 1.1.0, isl version none
+        GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096
+        ignoring duplicate directory "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/../../lib/gcc/riscv32-unknown-elf/7.1.1/include"
+        ignoring duplicate directory "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/../../lib/gcc/riscv32-unknown-elf/7.1.1/include-fixed"
+        ignoring duplicate directory "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/../../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/sys-include"
+        ignoring duplicate directory "/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/../../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/include
+         /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/include-fixed
+         /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/sys-include
+         /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/include
+        End of search list.
+        GNU C99 (GCC) version 7.1.1 20170509 (riscv32-unknown-elf)
+        	compiled by GNU C version 8.5.0 20210514 (Red Hat 8.5.0-23), GMP version 6.1.2, MPFR version 3.1.6-p2, MPC version 1.1.0, isl version none
+        GGC heuristics: --param ggc-min-expand=30 --param ggc-min-heapsize=4096
+        Compiler executable checksum: d7d9f18961be97a39f609d8e1dd87cdc
+        COLLECT_GCC_OPTIONS='-std=gnu99' '-v' '-o' 'CMakeFiles/cmTC_df9be.dir/CMakeCCompilerABI.c.obj' '-c' '-march=rv32imc' '-mabi=ilp32'
+         /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/bin/as -v --traditional-format -march=rv32imc -mabi=ilp32 -o CMakeFiles/cmTC_df9be.dir/CMakeCCompilerABI.c.obj /tmp/ccEP6mAv.s
+        GNU assembler version 2.28.0 (riscv32-unknown-elf) using BFD version (GNU Binutils) 2.28.0.20170505
+        COMPILER_PATH=/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../libexec/gcc/riscv32-unknown-elf/7.1.1/:/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../libexec/gcc/:/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/bin/
+        LIBRARY_PATH=/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/:/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/:/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/lib/:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-std=gnu99' '-v' '-o' 'CMakeFiles/cmTC_df9be.dir/CMakeCCompilerABI.c.obj' '-c' '-march=rv32imc' '-mabi=ilp32'
+        Linking C executable cmTC_df9be
+        /usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_df9be.dir/link.txt --verbose=1
+        /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc --specs=nosys.specs -v CMakeFiles/cmTC_df9be.dir/CMakeCCompilerABI.c.obj -o cmTC_df9be 
+        Using built-in specs.
+        Reading specs from /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/lib/nosys.specs
+        rename spec link_gcc_c_sequence to nosys_link_gcc_c_sequence
+        COLLECT_GCC=/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/riscv32-unknown-elf-gcc
+        COLLECT_LTO_WRAPPER=/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../libexec/gcc/riscv32-unknown-elf/7.1.1/lto-wrapper
+        Target: riscv32-unknown-elf
+        Configured with: /srv/home/francesco.conti9/Devel/pulp-riscv-gnu-toolchain/riscv-gcc/configure --target=riscv32-unknown-elf --prefix=/sw/tool/riscv/gcc7 --disable-shared --disable-threads --enable-languages=c,c++ --with-system-zlib --enable-tls --with-newlib --with-headers=/sw/tool/riscv/gcc7/riscv32-unknown-elf/include --disable-libmudflap --disable-libssp --disable-libquadmath --disable-libgomp --disable-nls --enable-checking=yes --enable-multilib --with-abi=ilp32 --with-arch=rv32imc 'CFLAGS_FOR_TARGET=-Os  -mcmodel=medlow'
+        Thread model: single
+        gcc version 7.1.1 20170509 (GCC) 
+        COMPILER_PATH=/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../libexec/gcc/riscv32-unknown-elf/7.1.1/:/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../libexec/gcc/:/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/bin/
+        LIBRARY_PATH=/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/:/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/:/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/lib/:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-specs=nosys.specs' '-v' '-o' 'cmTC_df9be' '-march=rv32imc' '-mabi=ilp32'
+         /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../libexec/gcc/riscv32-unknown-elf/7.1.1/collect2 -plugin /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../libexec/gcc/riscv32-unknown-elf/7.1.1/liblto_plugin.so -plugin-opt=/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../libexec/gcc/riscv32-unknown-elf/7.1.1/lto-wrapper -plugin-opt=-fresolution=/tmp/ccXr4bKR.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgloss -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lnosys -melf32lriscv -dT riscv.ld --march=rv32imc -o cmTC_df9be /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/lib/crt0.o /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/crtbegin.o -L/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1 -L/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc -L/sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/lib CMakeFiles/cmTC_df9be.dir/CMakeCCompilerABI.c.obj -lgcc --start-group -lc -lgloss --end-group -lgcc --start-group -lgcc -lc -lnosys --end-group /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/crtend.o
+        /sw/tool/riscv/pulp-gcc7/v1.0.16/bin/../lib/gcc/riscv32-unknown-elf/7.1.1/../../../../riscv32-unknown-elf/bin/ld: cannot open linker script file riscv.ld: No such file or directory
+        collect2: error: ld returned 1 exit status
+        gmake[1]: *** [CMakeFiles/cmTC_df9be.dir/build.make:99: cmTC_df9be] Error 1
+        gmake[1]: Leaving directory '/srv/home/alberto.dequino/magia-sdk/build/CMakeFiles/CMakeScratch/TryCompile-IgplZA'
+        gmake: *** [Makefile:127: cmTC_df9be/fast] Error 2
+        
+      exitCode: 2
+...
