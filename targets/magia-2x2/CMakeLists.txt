@@ -38,6 +38,7 @@ target_compile_options(runtime
   PUBLIC
   -march=${ISA}
   -mabi=${ABI}
+  -D__riscv__
 )
 
 target_link_options(runtime

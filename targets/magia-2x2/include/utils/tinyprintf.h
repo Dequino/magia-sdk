@@ -107,6 +107,9 @@ For further details see source code.
 regs Kusti, 23.10.2004
 */
 
+#ifndef _TINYPRINTF_INCLUDE_GUARD_
+#define _TINYPRINTF_INCLUDE_GUARD_
+
 void putf(char *null, char c) {
   *(volatile int *) (0xFFFF0004) = (int)c;
 }
@@ -698,4 +701,6 @@ int tfp_sprintf(char *str, const char *format, ...)
   va_end(ap);
   return retval;
 }
+#endif
+
 #endif

@@ -1,4 +1,6 @@
+#include <stdint.h>
 #include "idma.h"
+
 
 /*-----------------------------------------------------------------*/
 /* IDMA weak stubs (can be overridden by platform implementations) */
@@ -6,7 +8,7 @@
 
 __attribute__((weak)) int idma_init(idma_controller_t *ctrl){
     (void)ctrl;
-    return 0;
+    return 1;
 }
 
 __attribute__((weak)) int idma_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len){
@@ -14,7 +16,7 @@ __attribute__((weak)) int idma_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_
     (void) axi_addr;
     (void) obi_addr;
     (void) len;
-    return 0;
+    return 1;
 }
 
 __attribute__((weak)) int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps){
@@ -24,7 +26,7 @@ __attribute__((weak)) int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_
     (void) len;
     (void) std;
     (void) reps;
-    return 0;
+    return 1;
 }
 
 /*----------------------------------------*/
@@ -32,6 +34,6 @@ __attribute__((weak)) int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_
 /*----------------------------------------*/
 __attribute__((weak)) idma_controller_api_t idma_api = {
     .init = idma_init,
-    .memcpy_1d = idma_memcpy_1d;
-    .memcpy_2d = idma_memcpy_2d;
+    .memcpy_1d = idma_memcpy_1d,
+    .memcpy_2d = idma_memcpy_2d,
 };

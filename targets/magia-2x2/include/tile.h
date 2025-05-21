@@ -1,8 +1,9 @@
 #ifndef _TILE_INCLUDE_GUARD_
 #define _TILE_INCLUDE_GUARD_
 
+#include <stdint.h>
 #include "regs/tile_ctrl.h"
-#include "addr_maps/tile_addr_map.h"
+#include "addr_map/tile_addr_map.h"
 #include "utils/tinyprintf.h"
 #include "utils/magia_tile_utils.h"
 #include "utils/magia_utils.h"

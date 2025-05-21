@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include "redmule.h"
 
 /*--------------------------------------------------------------------*/
@@ -6,7 +7,7 @@
 
 __attribute__((weak)) int redmule_init(redmule_controller_t *ctrl){
     (void)ctrl;
-    return 0;
+    return 1;
 }
 
 /**
@@ -20,7 +21,7 @@ __attribute__((weak)) int redmule_init(redmule_controller_t *ctrl){
  * @param n Number of columns of x, and number of rows of w.
  * @param k Number of columns of w and y.
  * 
- * @return 0 if successful
+ * @return 1 if successful
  * 
  */
 __attribute__((weak)) int redmule_gemm(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k){
@@ -30,7 +31,7 @@ __attribute__((weak)) int redmule_gemm(uint32_t x, uint32_t w, uint32_t y, uint1
     (void)m;
     (void)n;
     (void)k;
-    return 0;
+    return 1;
 }
 
 /*-------------------------------------------*/

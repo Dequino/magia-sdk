@@ -10,7 +10,7 @@
 // These functions override the weak HAL symbols.
 // This is a WIP and might be redundant, as the moment of writing there is only one IDMA configuration tested on MAGIA.
 
-
+#include <stdint.h>
 #include "idma32.h"
 #include "regs/tile_ctrl.h"
 #include "utils/idma_isa_utils.h"
@@ -74,6 +74,13 @@ static int idma32_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, u
     }
     return 0;
 }
+
+extern int idma_init(idma_controller_t *ctrl)
+    __attribute__((alias("idma32_init"), used, visibility("default")));
+extern int idma_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len)
+    __attribute__((alias("idma32_memcpy_1d"), used, visibility("default")));
+extern int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps)
+    __attribute__((alias("idma32_memcpy_2d"), used, visibility("default")));
 
 
 /* Export the IDMA-specific controller API */

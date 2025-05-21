@@ -10,7 +10,7 @@
 // These functions override the weak HAL symbols.
 // This is a WIP and might be redundant, as the moment of writing there is only one Redmule configuration tested on MAGIA.
 
-
+#include <stdint.h>
 #include "redmule16.h"
 #include "regs/tile_ctrl.h"
 #include "utils/redmule_isa_utils.h"
@@ -42,6 +42,11 @@ static int redmule16_gemm(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16
 
     return 0;
 }
+
+extern int redmule_init(redmule_controller_t *ctrl)
+    __attribute__((alias("redmule16_init"), used, visibility("default")));
+extern int redmule_gemm(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k)
+    __attribute__((alias("redmule16_gemm"), used, visibility("default")));
 
 
 /* Export the Redmule-specific controller API */
