@@ -19,7 +19,7 @@ file(GLOB_RECURSE C_SOURCES
 set_property(SOURCE ${ASM_SOURCES} PROPERTY LANGUAGE ASM)
 
 target_sources(runtime
-  PRIVATE
+  PUBLIC
   ${ASM_SOURCES}
   ${C_SOURCES}
 )
@@ -30,7 +30,7 @@ target_include_directories(runtime
 )
 
 target_compile_options(runtime
-  PRIVATE
+  PUBLIC
   -O2
 )
 
