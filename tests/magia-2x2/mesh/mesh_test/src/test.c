@@ -23,7 +23,7 @@ int main(void) {
      */
     uint32_t hartid = get_hartid();
 
-    h_pprintf("\nHELLO FROM TILE "); n_pprintf(hs(hartid));
+    //h_pprintf("\nHELLO FROM TILE "); n_pprintf(hs(hartid));
 
     uint32_t y_id = GET_Y_ID(hartid);
     uint32_t x_id = GET_X_ID(hartid);
