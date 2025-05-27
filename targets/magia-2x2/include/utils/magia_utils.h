@@ -3,6 +3,7 @@
 
 #include "magia_tile_utils.h"
 #include "addr_map/tile_addr_map.h"
+#include "regs/tile_ctrl.h"
 
 #define h_pprintf(x) (h_psprint(get_hartid(), x))
 #define n_pprintf(x) (n_psprint(get_hartid(), x))
@@ -104,6 +105,10 @@ void psprint(uint32_t hartid, const char* string){
     uint8_t index = 0;
     while (string[index] != '\0')
         mmio8(0xFFFF0004 + (hartid*4)) = string[index++];
+}
+
+void magia_return(uint32_t hartid, uint32_t exit_code){
+    mmio16(TEST_END_ADDR + hartid*2) = (uint16_t) (exit_code - get_hartid());
 }
 
 #endif /*MAGIA_UTILS_H*/

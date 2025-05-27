@@ -24,13 +24,18 @@ num_cores := 4
 BUILD_DIR := ../MAGIA/work/sw/tests/$(test).c
 BIN := $(BUILD_DIR)/verif
 
+target-platform=magia-2x2
+compiler=GCC
 
 
 clean:
 	rm -rf build/
 
 build:
-	cmake -DTARGET_PLATFORM=magia-2x2 -DCOMPILER=GCC -B build --trace-expand
+ifeq ($(compiler), LLVM)
+	$(error COMING SOON!)
+endif
+	cmake -DTARGET_PLATFORM=$(target-platform) -DCOMPILER=$(compiler) -B build --trace-expand
 	cmake --build build --verbose
 
 run: 

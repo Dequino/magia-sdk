@@ -100,5 +100,9 @@ int main(void) {
     /**
      * 5. Wait for all the mesh to complete and then check results (only tile 0 checks the entire output).
      */
+
+
+
+    magia_return(hartid, PASS_EXIT_CODE);
     return 0;
 }

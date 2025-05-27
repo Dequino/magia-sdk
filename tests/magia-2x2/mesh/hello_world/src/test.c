@@ -15,5 +15,7 @@ int main(void){
     
     h_pprintf("\nHELLO FROM TILE "); n_pprintf(hs(hartid));
 
+    magia_return(hartid, PASS_EXIT_CODE);
+    
     return 0;
 }
