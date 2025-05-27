@@ -13,7 +13,14 @@
 int main(void){
     uint32_t hartid = get_hartid();
     
-    h_pprintf("\nHELLO FROM TILE "); n_pprintf(hs(hartid));
+    //h_pprintf("\nHELLO FROM TILE "); n_pprintf(hs(hartid));
+
+    mmio8(0xCC008000) = 'C';
+    mmio8(0xCC008000) = 'A';
+    mmio8(0xCC008000) = 'Z';
+    mmio8(0xCC008000) = 'Z';
+    mmio8(0xCC008000) = '0';
+    mmio8(0xCC008000) = 0x0A;
 
     magia_return(hartid, PASS_EXIT_CODE);
     

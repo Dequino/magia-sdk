@@ -26,6 +26,7 @@ BIN := $(BUILD_DIR)/verif
 
 target-platform=magia-2x2
 compiler=GCC
+gui=0
 
 
 clean:
@@ -66,7 +67,7 @@ else ifeq ($(platform), rtl)
 	riscv32-unknown-elf-objdump -d -l -s $(BIN) > $(BIN).objdump
 	python3 scripts/objdump2itb.py $(BIN).objdump > $(BIN).itb
 	cd ../MAGIA 													&& \
-	make run test=$(test) num_cores=$(num_cores)
+	make run test=$(test) num_cores=$(num_cores) gui=$(gui)
 else
 	$(error Only rtl and gvsoc are supported as platforms.)
 endif
