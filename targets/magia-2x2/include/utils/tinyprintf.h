@@ -113,7 +113,7 @@ regs Kusti, 23.10.2004
 #ifndef _TINYPRINTF_INCLUDE_GUARD_
 #define _TINYPRINTF_INCLUDE_GUARD_
 
-void putf(char *null, char c) {
+static void putf(char *null, char c) {
   *(volatile uint8_t *) (MOCK_UART_ADDR) = (uint8_t)c;
 }
 
@@ -173,14 +173,14 @@ typedef void (*putcf) (void *, char);
    The 'tfp_printf' and 'tfp_sprintf' functions simply define their own
    callback and pass to it the right 'putp' it is expecting.
 */
-void tfp_format(void *putp, putcf putf, const char *fmt, va_list va);
+static void tfp_format(void *putp, putcf putf, const char *fmt, va_list va);
 
 #if TINYPRINTF_DEFINE_TFP_SPRINTF
-int tfp_vsnprintf(char *str, size_t size, const char *fmt, va_list ap);
-int tfp_snprintf(char *str, size_t size, const char *fmt, ...) \
+static int tfp_vsnprintf(char *str, size_t size, const char *fmt, va_list ap);
+static int tfp_snprintf(char *str, size_t size, const char *fmt, ...) \
      _TFP_SPECIFY_PRINTF_FMT(3, 4);
-int tfp_vsprintf(char *str, const char *fmt, va_list ap);
-int tfp_sprintf(char *str, const char *fmt, ...) \
+static int tfp_vsprintf(char *str, const char *fmt, va_list ap);
+static int tfp_sprintf(char *str, const char *fmt, ...) \
     _TFP_SPECIFY_PRINTF_FMT(2, 3);
 # if TINYPRINTF_OVERRIDE_LIBC
 #  define vsnprintf tfp_vsnprintf
@@ -191,8 +191,8 @@ int tfp_sprintf(char *str, const char *fmt, ...) \
 #endif
 
 #if TINYPRINTF_DEFINE_TFP_PRINTF
-void init_printf(void *putp, putcf putf);
-void tfp_printf(char *fmt, ...) _TFP_SPECIFY_PRINTF_FMT(1, 2);
+static void init_printf(void *putp, putcf putf);
+static void tfp_printf(char *fmt, ...) _TFP_SPECIFY_PRINTF_FMT(1, 2);
 # if TINYPRINTF_OVERRIDE_LIBC
 #  define printf tfp_printf
 # endif
@@ -437,7 +437,7 @@ static void putchw(void *putp, putcf putf__, struct param *p)
     p->flush = 1;
 }
 
-void tfp_format(void *putp, putcf putf__, const char *fmt, va_list va)
+static void tfp_format(void *putp, putcf putf__, const char *fmt, va_list va)
 {
     struct param p;
 #ifdef PRINTF_LONG_SUPPORT
@@ -624,13 +624,13 @@ void tfp_format(void *putp, putcf putf__, const char *fmt, va_list va)
 static putcf stdout_putf;
 static void *stdout_putp;
 
-void init_printf(void *putp, putcf putf__)
+static void init_printf(void *putp, putcf putf__)
 {
     stdout_putf = putf;
     stdout_putp = putp;
 }
 
-void tfp_printf(char *fmt, ...)
+static void tfp_printf(char *fmt, ...)
 {
     va_list va;
     va_start(va, fmt);
@@ -655,7 +655,7 @@ static void _vsnprintf_putcf(void *p, char c)
   data->num_chars ++;
 }
 
-int tfp_vsnprintf(char *str, size_t size, const char *format, va_list ap)
+static int tfp_vsnprintf(char *str, size_t size, const char *format, va_list ap)
 {
   struct _vsnprintf_putcf_data data;
 
@@ -675,7 +675,7 @@ int tfp_vsnprintf(char *str, size_t size, const char *format, va_list ap)
   return data.num_chars;
 }
 
-int tfp_snprintf(char *str, size_t size, const char *format, ...)
+static int tfp_snprintf(char *str, size_t size, const char *format, ...)
 {
   va_list ap;
   int retval;
@@ -698,7 +698,7 @@ static void _vsprintf_putcf(void *p, char c)
   data->dest[data->num_chars++] = c;
 }
 
-int tfp_vsprintf(char *str, const char *format, va_list ap)
+static int tfp_vsprintf(char *str, const char *format, va_list ap)
 {
   struct _vsprintf_putcf_data data;
   data.dest = str;
@@ -708,7 +708,7 @@ int tfp_vsprintf(char *str, const char *format, va_list ap)
   return data.num_chars;
 }
 
-int tfp_sprintf(char *str, const char *format, ...)
+static int tfp_sprintf(char *str, const char *format, ...)
 {
   va_list ap;
   int retval;
