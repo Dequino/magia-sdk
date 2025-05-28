@@ -17,6 +17,7 @@
 #define MHARTID_OFFSET (0x00100000)
 #define L2_BASE        (0xCC000000)
 #define TEST_END_ADDR  (0xCC030000)
+#define MOCK_UART_ADDR (0xCC008000)
 
 #define MESH_X_TILES (2)
 #define MESH_Y_TILES (2)

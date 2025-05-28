@@ -107,11 +107,14 @@ For further details see source code.
 regs Kusti, 23.10.2004
 */
 
+#include "addr_map/tile_addr_map.h"
+#include <stdint.h>
+
 #ifndef _TINYPRINTF_INCLUDE_GUARD_
 #define _TINYPRINTF_INCLUDE_GUARD_
 
 void putf(char *null, char c) {
-  *(volatile int *) (0xFFFF0004) = (int)c;
+  *(volatile uint8_t *) (MOCK_UART_ADDR) = (uint8_t)c;
 }
 
 #ifndef __TFP_PRINTF__
@@ -259,6 +262,7 @@ struct param {
     char sign;          /**<  The sign to display (if any) */
     unsigned int base;  /**<  number base (e.g.: 8, 10, 16) */
     char *bf;           /**<  Buffer to output */
+    char flush;         /**<  Flag to flush the print */
 };
 
 
@@ -429,6 +433,8 @@ static void putchw(void *putp, putcf putf__, struct param *p)
         while (n-- > 0)
             putf(putp, ' ');
     }
+
+    p->flush = 1;
 }
 
 void tfp_format(void *putp, putcf putf__, const char *fmt, va_list va)
@@ -441,10 +447,17 @@ void tfp_format(void *putp, putcf putf__, const char *fmt, va_list va)
 #endif
     char ch;
     p.bf = bf;
+    p.flush = 0;
 
     while ((ch = *(fmt++))) {
         if (ch != '%') {
             putf(putp, ch);
+            if(ch=='\n'){
+                p.flush=0;
+            }
+            else{
+                p.flush=1;
+            }
         } else {
 #ifdef PRINTF_LONG_SUPPORT
             char lng = 0;  /* 1 for long, 2 for long long */
@@ -595,11 +608,15 @@ void tfp_format(void *putp, putcf putf__, const char *fmt, va_list va)
                 break;
             case '%':
                 putf(putp, ch);
+                p.flush = 1;
             default:
                 break;
             }
         }
     }
+    if(p.flush){
+        putf(putp, 0x0A);
+    } 
  abort:;
 }
 
