@@ -56,6 +56,9 @@ int main(void) {
     if(tile_h < 1 || tile_w < 1){
         return 0;
     }
+    else{
+        printf("Tile w: %d, tile h: %d", tile_w, tile_h);
+    }
 
     /** 
      * 2. Set and do the 2D AXI to OBI (L2 to L1) transfers for each tile
@@ -98,9 +101,23 @@ int main(void) {
     idma_memcpy_2d(1, axi_addr_y, obi_addr_y, len_y, std_y, reps_y);
 
     /**
-     * 5. Wait for all the mesh to complete and then check results (only tile 0 checks the entire output).
+     * 5. Check results.
      */
+    uint32_t errors=0;
+    uint32_t axi_addr_z = z_out + (x_id * tile_w_max * 2) + (y_id * K_SIZE * tile_h_max * 2);
+    for(uint8_t i = 0; i < tile_h; i++){
+        for(uint8_t j = 0; j < tile_w; j++){
+            if(*(volatile uint16_t*)(obi_addr_y + (i * tile_w + j) * 2) != *(volatile uint16_t*)(axi_addr_z + (i * K_SIZE + j) * 2)){
+                //printf("ERROR DETECTED!\n");
+                if(hartid==0){
+                    printf("Error detected at coordinates[%d][%d]: Y=%x Z=%x", i, j, *(volatile uint16_t*)(obi_addr_y + (i * tile_w + j) * 2), *(volatile uint16_t*)(axi_addr_z + (i * K_SIZE + j) * 2));
+                }
+                errors++;
+            }
+        }
+    }
 
+    printf("Number of errors: %d", errors);
 
 
     magia_return(hartid, PASS_EXIT_CODE);
