@@ -19,10 +19,38 @@ typedef struct idma_controller_api idma_controller_api_t;
  * Holds the API function pointers, base address and controller-specific configuration.
  */
 struct idma_controller {
-    idma_controller_api_t *api;
-    uint32_t base;
-    void *cfg;
+    idma_controller_api_t *api; /**< Function pointers for this interface. */
+    uint32_t base;              /**< MMIO base address (if applicable). */
+    void *cfg;                  /**< Driver‑specific configuration. */
 };
+
+/**
+ * IDMA configuration structure.
+ * This structure holds the configuration settings for IDMA initialization.
+ */
+typedef struct {
+    uint32_t hartid;    /**< Mesh tile ID*/
+} idma_config_t;
+
+/**
+ * Default IDMA configuration settings.
+ */
+extern idma_config_t default_cfg;
+
+/**
+ * Opens and initializes the IDMA interface.
+ */
+extern int idma_init(idma_controller_t *ctrl);
+
+/**
+ * Start 1-dimensional memory copy.
+ */
+extern int idma_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len);
+
+/**
+ * Start 2-dimensional memory copy.
+ */
+extern int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps);
 
 /**
  * WIP
