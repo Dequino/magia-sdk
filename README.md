@@ -77,7 +77,7 @@ To add your own test, you have to integrate a new test folder inside the **tests
             PRIVATE
             -O2
             )
-            target_link_libraries(${TEST_NAME} PUBLIC runtime)
+            target_link_libraries(${TEST_NAME} PUBLIC runtime hal)
 
             add_custom_command(
                     TARGET ${TEST_NAME}
