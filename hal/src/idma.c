@@ -7,11 +7,12 @@
 /*-----------------------------------------------------------------*/
 
 __attribute__((weak)) int idma_init(idma_controller_t *ctrl){
-    (void)ctrl;
+    (void) ctrl;
     return 1;
 }
 
-__attribute__((weak)) int idma_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len){
+__attribute__((weak)) int idma_memcpy_1d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len){
+    (void) ctrl;
     (void) dir;
     (void) axi_addr;
     (void) obi_addr;
@@ -19,7 +20,8 @@ __attribute__((weak)) int idma_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_
     return 1;
 }
 
-__attribute__((weak)) int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps){
+__attribute__((weak)) int idma_memcpy_2d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps){
+    (void) ctrl;
     (void) dir;
     (void) axi_addr;
     (void) obi_addr;

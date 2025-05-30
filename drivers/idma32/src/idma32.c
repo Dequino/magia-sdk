@@ -29,7 +29,7 @@ static int idma32_init(idma_controller_t *ctrl) {
  * @param obi_addr OBI/L1 memory address of first element.
  * @param len Byte length of memory block to transfer.
  */
-static int idma32_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len){
+static int idma32_memcpy_1d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len){
     if(dir){ // OBI to AXI (L1 to L2)
         idma_conf_out();
         idma_set_addr_len_out(axi_addr, obi_addr, len);
@@ -57,7 +57,7 @@ static int idma32_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, u
  * @param std Offset to add to the memory address (axi_addr or obi_addr) to calculate the start of the next memory block.
  * @param reps Number of repetitions.
  */
-static int idma32_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps){
+static int idma32_memcpy_2d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps){
     if(dir){ // OBI to AXI (L1 to L2)
         idma_conf_out();
         idma_set_addr_len_out(axi_addr, obi_addr, len);
@@ -77,9 +77,9 @@ static int idma32_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, u
 
 extern int idma_init(idma_controller_t *ctrl)
     __attribute__((alias("idma32_init"), used, visibility("default")));
-extern int idma_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len)
+extern int idma_memcpy_1d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len)
     __attribute__((alias("idma32_memcpy_1d"), used, visibility("default")));
-extern int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps)
+extern int idma_memcpy_2d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps)
     __attribute__((alias("idma32_memcpy_2d"), used, visibility("default")));
 
 

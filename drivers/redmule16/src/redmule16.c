@@ -36,7 +36,7 @@ static int redmule16_init(redmule_controller_t *ctrl) {
  * @return 0 if successful
  * 
  */
-static int redmule16_gemm(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k){
+static int redmule16_gemm(redmule_controller_t *ctrl, uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k){
     redmule_mcnfig(k, m, n);
     redmule_marith(y, w, x);
 
@@ -45,7 +45,7 @@ static int redmule16_gemm(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16
 
 extern int redmule_init(redmule_controller_t *ctrl)
     __attribute__((alias("redmule16_init"), used, visibility("default")));
-extern int redmule_gemm(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k)
+extern int redmule_gemm(redmule_controller_t *ctrl, uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k)
     __attribute__((alias("redmule16_gemm"), used, visibility("default")));
 
 

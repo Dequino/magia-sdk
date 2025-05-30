@@ -84,7 +84,7 @@ int main(void) {
     uint32_t obi_addr_x = (L1_TILE_BASE);
     uint32_t axi_addr_x = x_inp + (y_id * N_SIZE * tile_h_max * 2); 
     
-    memcpy_2d(&idma_ctrl, 0, axi_addr_x, obi_addr_x, len_x, std_x, reps_x);
+    idma_memcpy_2d(&idma_ctrl, 0, axi_addr_x, obi_addr_x, len_x, std_x, reps_x);
 
     uint32_t len_w = (uint32_t) (tile_w * 2);
     uint32_t std_w = K_SIZE * 2;
@@ -92,7 +92,7 @@ int main(void) {
     uint32_t obi_addr_w = (L1_TILE_BASE + (len_x * reps_x));
     uint32_t axi_addr_w = w_inp + (x_id * tile_w_max * 2); 
     
-    memcpy_2d(&idma_ctrl, 0, axi_addr_w, obi_addr_w, len_w, std_w, reps_w);
+    idma_memcpy_2d(&idma_ctrl, 0, axi_addr_w, obi_addr_w, len_w, std_w, reps_w);
 
     uint32_t len_y = (uint32_t) tile_w * 2;
     uint32_t std_y = K_SIZE * 2;
@@ -100,17 +100,17 @@ int main(void) {
     uint32_t obi_addr_y = (L1_TILE_BASE + (len_x * reps_x) + (len_w * reps_w));
     uint32_t axi_addr_y = y_inp + (x_id * tile_w_max * 2) + (y_id * K_SIZE * tile_h_max * 2); 
     
-    memcpy_2d(&idma_ctrl, 0, axi_addr_y, obi_addr_y, len_y, std_y, reps_y);
+    idma_memcpy_2d(&idma_ctrl, 0, axi_addr_y, obi_addr_y, len_y, std_y, reps_y);
 
     /** 
      * 3. Set and do the GEMM on Redmule for each tile.
      */
-    gemm(&redmule_ctrl, obi_addr_x, obi_addr_w, obi_addr_y, (uint32_t) tile_h, N_SIZE, (uint32_t) tile_w);
+    redmule_gemm(&redmule_ctrl, obi_addr_x, obi_addr_w, obi_addr_y, (uint32_t) tile_h, N_SIZE, (uint32_t) tile_w);
 
     /** 
      * 4. Copy the result back to L2.
      */
-    memcpy_2d(&idma_ctrl, 1, axi_addr_y, obi_addr_y, len_y, std_y, reps_y);
+    idma_memcpy_2d(&idma_ctrl, 1, axi_addr_y, obi_addr_y, len_y, std_y, reps_y);
 
     /**
      * 5. Check results.

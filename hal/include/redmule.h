@@ -30,7 +30,7 @@ extern int redmule_init(redmule_controller_t *ctrl);
  * This function prepares and execute an accelerated generic matrix multiplication.
  * (N x M * M x K) + (N x K) = (N x K)
  */
-extern int redmule_gemm(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k);
+extern int redmule_gemm(redmule_controller_t *ctrl, uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k);
 
 /**
  * WIP
@@ -38,7 +38,7 @@ extern int redmule_gemm(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t
  */
 struct redmule_controller_api {
     int (*init)(redmule_controller_t *ctrl);
-    int (*gemm)(uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k);
+    int (*gemm)(redmule_controller_t *ctrl, uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k);
 };
 
 /*

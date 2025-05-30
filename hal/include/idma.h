@@ -45,12 +45,12 @@ extern int idma_init(idma_controller_t *ctrl);
 /**
  * Start 1-dimensional memory copy.
  */
-extern int idma_memcpy_1d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len);
+extern int idma_memcpy_1d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len);
 
 /**
  * Start 2-dimensional memory copy.
  */
-extern int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps);
+extern int idma_memcpy_2d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps);
 
 /**
  * WIP
@@ -58,8 +58,8 @@ extern int idma_memcpy_2d(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uin
  */
 struct idma_controller_api {
     int (*init)(idma_controller_t *ctrl);
-    int (*memcpy_1d)(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, volatile uint32_t len);
-    int (*memcpy_2d)(uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps);
+    int (*memcpy_1d)(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, volatile uint32_t len);
+    int (*memcpy_2d)(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps);
 };
 
 /*
