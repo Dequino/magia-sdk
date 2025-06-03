@@ -23,7 +23,7 @@ inline void amo_increment(volatile uint32_t addr){
     asm volatile("amoadd.w t2, t1, (t0)" ::);
 }
 
-char* utoa(unsigned int value, unsigned int base, char* result) {
+static char* utoa(unsigned int value, unsigned int base, char* result) {
     if (base < 2 || base > 16){
         *result = '\0'; 
         return result; 
@@ -51,28 +51,28 @@ char* utoa(unsigned int value, unsigned int base, char* result) {
     return result;
 }
 
-char* bs(uint32_t x) {
+static char* bs(uint32_t x) {
     uint32_t hartid = get_hartid();
     char *address = STR_BASE + L1_TILE_OFFSET*hartid;
 
     return utoa(x, 2, address);
 }
 
-char* ds(uint32_t x) {
+static char* ds(uint32_t x) {
     uint32_t hartid = get_hartid();
     char *address = STR_BASE + L1_TILE_OFFSET*hartid;
 
     return utoa(x, 10, address);
 }
 
-char* hs(uint32_t x) {
+static char* hs(uint32_t x) {
     uint32_t hartid = get_hartid();
     char *address = STR_BASE + L1_TILE_OFFSET*hartid;
 
     return utoa(x, 16, address);
 }
 
-void h_psprint(uint32_t hartid, const char* string){
+static void h_psprint(uint32_t hartid, const char* string){
     mmio8(0xFFFF0004 + (hartid*4)) = '[';
     mmio8(0xFFFF0004 + (hartid*4)) = 'm';
     mmio8(0xFFFF0004 + (hartid*4)) = 'h';
@@ -94,20 +94,20 @@ void h_psprint(uint32_t hartid, const char* string){
         mmio8(0xFFFF0004 + (hartid*4)) = string[index++];
 }
 
-void n_psprint(uint32_t hartid, const char* string){
+static void n_psprint(uint32_t hartid, const char* string){
     uint8_t index = 0;
     while (string[index] != '\0')
         mmio8(0xFFFF0004 + (hartid*4)) = string[index++];
     mmio8(0xFFFF0004 + (hartid*4)) = '\n';
 }
 
-void psprint(uint32_t hartid, const char* string){
+static void psprint(uint32_t hartid, const char* string){
     uint8_t index = 0;
     while (string[index] != '\0')
         mmio8(0xFFFF0004 + (hartid*4)) = string[index++];
 }
 
-void magia_return(uint32_t hartid, uint32_t exit_code){
+static void magia_return(uint32_t hartid, uint32_t exit_code){
     mmio16(TEST_END_ADDR + hartid*2) = (uint16_t) (exit_code - get_hartid());
 }
 

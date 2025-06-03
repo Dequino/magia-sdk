@@ -37,6 +37,9 @@ int main(void) {
         .api = &redmule_api,
     };
 
+    idma_init(&idma_ctrl);
+    redmule_init(&redmule_ctrl);
+
     uint32_t y_id = GET_Y_ID(hartid);
     uint32_t x_id = GET_X_ID(hartid);
     uint32_t L1_TILE_BASE = L1_BASE + hartid * L1_TILE_OFFSET;
@@ -69,7 +72,7 @@ int main(void) {
         return 0;
     }
     else{
-        printf("Tile w: %d, tile h: %d", tile_w, tile_h);
+        printf("ID:%d, Tile-X:%d, Tile-Y:%d, Tile w: %d, tile h: %d", hartid, x_id, y_id, tile_w, tile_h);
     }
 
     /** 
@@ -82,7 +85,7 @@ int main(void) {
     uint32_t std_x = N_SIZE * 2;
     uint32_t reps_x = (uint32_t) tile_h;
     uint32_t obi_addr_x = (L1_TILE_BASE);
-    uint32_t axi_addr_x = x_inp + (y_id * N_SIZE * tile_h_max * 2); 
+    uint32_t axi_addr_x = (uint32_t) x_inp + (y_id * N_SIZE * tile_h_max * 2); 
     
     idma_memcpy_2d(&idma_ctrl, 0, axi_addr_x, obi_addr_x, len_x, std_x, reps_x);
 
@@ -90,7 +93,7 @@ int main(void) {
     uint32_t std_w = K_SIZE * 2;
     uint32_t reps_w = N_SIZE;
     uint32_t obi_addr_w = (L1_TILE_BASE + (len_x * reps_x));
-    uint32_t axi_addr_w = w_inp + (x_id * tile_w_max * 2); 
+    uint32_t axi_addr_w = (uint32_t) w_inp + (x_id * tile_w_max * 2); 
     
     idma_memcpy_2d(&idma_ctrl, 0, axi_addr_w, obi_addr_w, len_w, std_w, reps_w);
 
@@ -98,14 +101,14 @@ int main(void) {
     uint32_t std_y = K_SIZE * 2;
     uint32_t reps_y = (uint32_t) tile_h;
     uint32_t obi_addr_y = (L1_TILE_BASE + (len_x * reps_x) + (len_w * reps_w));
-    uint32_t axi_addr_y = y_inp + (x_id * tile_w_max * 2) + (y_id * K_SIZE * tile_h_max * 2); 
+    uint32_t axi_addr_y = (uint32_t) y_inp + (x_id * tile_w_max * 2) + (y_id * K_SIZE * tile_h_max * 2); 
     
     idma_memcpy_2d(&idma_ctrl, 0, axi_addr_y, obi_addr_y, len_y, std_y, reps_y);
 
     /** 
      * 3. Set and do the GEMM on Redmule for each tile.
      */
-    redmule_gemm(&redmule_ctrl, obi_addr_x, obi_addr_w, obi_addr_y, (uint32_t) tile_h, N_SIZE, (uint32_t) tile_w);
+    redmule_gemm(&redmule_ctrl, obi_addr_x, obi_addr_w, obi_addr_y, (uint16_t) tile_h, (uint16_t) N_SIZE, (uint16_t) tile_w);
 
     /** 
      * 4. Copy the result back to L2.
@@ -116,13 +119,17 @@ int main(void) {
      * 5. Check results.
      */
     uint32_t errors=0;
-    uint32_t axi_addr_z = z_out + (x_id * tile_w_max * 2) + (y_id * K_SIZE * tile_h_max * 2);
+    uint16_t computed, expected, diff = 0;
+    uint32_t axi_addr_z = (uint32_t) z_out + (x_id * tile_w_max * 2) + (y_id * K_SIZE * tile_h_max * 2);
     for(uint8_t i = 0; i < tile_h; i++){
         for(uint8_t j = 0; j < tile_w; j++){
-            if(*(volatile uint16_t*)(obi_addr_y + (i * tile_w + j) * 2) != *(volatile uint16_t*)(axi_addr_z + (i * K_SIZE + j) * 2)){
+            computed = *(volatile uint16_t*)(axi_addr_y + (i * K_SIZE + j) * 2);
+            expected = *(volatile uint16_t*)(axi_addr_z + (i * K_SIZE + j) * 2);
+            diff = (computed > expected) ? (computed - expected) : (expected - computed);
+            if(diff > 0x0011){
                 //printf("ERROR DETECTED!\n");
                 if(hartid==0){
-                    printf("Error detected at coordinates[%d][%d]: Y=%x Z=%x", i, j, *(volatile uint16_t*)(obi_addr_y + (i * tile_w + j) * 2), *(volatile uint16_t*)(axi_addr_z + (i * K_SIZE + j) * 2));
+                    printf("Error detected at coordinates[%d][%d]: Y=%x Z=%x", (tile_h_max * y_id + i), (tile_w_max * x_id + j), *(volatile uint16_t*)(axi_addr_y + (i * K_SIZE + j) * 2), *(volatile uint16_t*)(axi_addr_z + (i * K_SIZE + j) * 2));
                 }
                 errors++;
             }

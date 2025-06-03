@@ -13,7 +13,7 @@
 #define addr16(x) (*(uint16_t *)(&x))
 #define addr8(x)  (*(uint8_t  *)(&x))
 
-void wait_print(unsigned int cycles){
+static void wait_print(unsigned int cycles){
     for(int i = 0; i <= cycles; i++){
         printf("Waiting: [");
         for(int j = 0; j < i; j++)
@@ -57,7 +57,7 @@ inline void ccount_dis(){
     asm volatile("csrrsi zero, 0x320, 0x1" ::);
 }
 
-inline uint32_t get_cyclel(){
+static inline uint32_t get_cyclel(){
     uint32_t cyclel;
     asm volatile("csrr %0, cycle"
                  :"=r"(cyclel):);
@@ -71,7 +71,7 @@ inline uint32_t get_cycleh(){
     return cycleh;
 }
 
-uint32_t get_cycle(){
+static uint32_t get_cycle(){
     uint32_t cyclel = get_cyclel();
     uint32_t cycleh = get_cycleh();
     if (cycleh) return 0;
@@ -92,7 +92,7 @@ inline uint32_t get_timeh(){
     return timeh;
 }
 
-uint32_t get_time(){
+static uint32_t get_time(){
     uint32_t timel = get_timel();
     uint32_t timeh = get_timeh();
     if (timeh) return 0;

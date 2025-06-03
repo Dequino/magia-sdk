@@ -5,10 +5,10 @@
 /* Redmule weak stubs (can be overridden by platform implementations) */
 /*--------------------------------------------------------------------*/
 
-__attribute__((weak)) int redmule_init(redmule_controller_t *ctrl){
+/*__attribute__((weak)) int redmule_init(redmule_controller_t *ctrl){
     (void) ctrl;
     return 1;
-}
+}*/
 
 /**
  * This function prepares and execute an accelerated generic matrix multiplication.
@@ -24,7 +24,7 @@ __attribute__((weak)) int redmule_init(redmule_controller_t *ctrl){
  * @return 1 if successful
  * 
  */
-__attribute__((weak)) int redmule_gemm(redmule_controller_t *ctrl, uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k){
+/*__attribute__((weak)) int redmule_gemm(redmule_controller_t *ctrl, uint32_t x, uint32_t w, uint32_t y, uint16_t m, uint16_t n, uint16_t k){
     (void) ctrl;
     (void) x;
     (void) w;
@@ -33,7 +33,7 @@ __attribute__((weak)) int redmule_gemm(redmule_controller_t *ctrl, uint32_t x, u
     (void) n;
     (void) k;
     return 1;
-}
+}*/
 
 /*-------------------------------------------*/
 /* Export the controller API for the Redmule */
