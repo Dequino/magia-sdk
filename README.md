@@ -40,7 +40,7 @@ Follow the instructions in the [Magia](https://github.com/pulp-platform/MAGIA/tr
 
     To run one of the tests:
 
-    `make run test=<name_of_test_binary_in_build/bin> platform=<rtl/gvsoc> num_cores=<total_number_of_tiles>`
+    `make run test=<name_of_test_binary_in_build/bin> platform=<rtl/gvsoc> num_cores=<total_number_of_tiles> gui=<0 if terminal only, 1 to open Questasim's graphic interface`
 
 ## Adding your own test
 This SDK uses a nested CMakeList mechanism to build and check for dependencies.
