@@ -39,7 +39,7 @@ int idma32_memcpy_1d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, ui
         idma_set_std3_rep3_out(0, 0, 1);
         idma_start_out();
         asm volatile("wfi" ::: "memory");
-        printf("IDMA_memcpy_1d: Detected IRQ...\n");
+        //printf("IDMA_memcpy_1d: Detected IRQ...\n");
     }
     else{ // AXI to OBI (L2 to L1)
         idma_conf_in();
@@ -48,7 +48,7 @@ int idma32_memcpy_1d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, ui
         idma_set_std3_rep3_in(0, 0, 1);
         idma_start_in();
         asm volatile("wfi" ::: "memory");
-        printf("IDMA_memcpy_1d: Detected IRQ...\n");
+        //printf("IDMA_memcpy_1d: Detected IRQ...\n");
     }
     return 0;
 }
@@ -64,7 +64,7 @@ int idma32_memcpy_1d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, ui
  * @param reps Number of repetitions.
  */
 int idma32_memcpy_2d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, uint32_t obi_addr, uint32_t len, uint32_t std, uint32_t reps){
-    printf("IDMA Transfer! Direction: %d\n", dir);
+    //printf("IDMA Transfer! Direction: %d\n", dir);
     
     if(dir){ // OBI to AXI (L1 to L2)
         idma_conf_out();
@@ -73,7 +73,7 @@ int idma32_memcpy_2d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, ui
         idma_set_std3_rep3_out(0, 0, 1);
         idma_start_out();
         asm volatile("wfi" ::: "memory");
-        printf("IDMA_memcpy_2d: Detected IRQ...\n");
+        //printf("IDMA_memcpy_2d: Detected IRQ...\n");
     }
     else{ // AXI to OBI (L2 to L1)
         idma_conf_in();
@@ -82,7 +82,7 @@ int idma32_memcpy_2d(idma_controller_t *ctrl, uint8_t dir, uint32_t axi_addr, ui
         idma_set_std3_rep3_in(0, 0, 1);
         idma_start_in();
         asm volatile("wfi" ::: "memory");
-        printf("IDMA_memcpy_2d: Detected IRQ...\n");  
+        //printf("IDMA_memcpy_2d: Detected IRQ...\n");  
     }
     return 0;
 }
