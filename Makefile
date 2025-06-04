@@ -18,15 +18,15 @@
 # 
 # Magia-sdk Makefile
 
-SHELL := /bin/bash
-num_cores := 4
+SHELL 			:= /bin/bash
 
-BUILD_DIR := ../MAGIA/work/sw/tests/$(test).c
-BIN := $(BUILD_DIR)/verif
+BUILD_DIR 		:= ../MAGIA/work/sw/tests/$(test).c
+MAGIA_DIR 		:= ../MAGIA
+BIN 			:= $(BUILD_DIR)/verif
 
-target-platform=magia-2x2
-compiler=GCC
-gui=0
+target-platform := magia-2x2
+compiler 		:= GCC
+gui 			:= 0
 
 
 clean:
@@ -67,7 +67,33 @@ else ifeq ($(platform), rtl)
 	riscv32-unknown-elf-objdump -d -l -s $(BIN) > $(BIN).objdump
 	python3 scripts/objdump2itb.py $(BIN).objdump > $(BIN).itb
 	cd ../MAGIA 													&& \
-	make run test=$(test) num_cores=$(num_cores) gui=$(gui)
+	make run test=$(test) gui=$(gui)
 else
 	$(error Only rtl and gvsoc are supported as platforms.)
 endif
+
+MAGIA:
+ifeq ($(target-platform), magia-2x2)
+	sed -i -E 's/^(num_cores[[:space:]]*\?=[[:space:]]*)[0-9]+/\14/' $(MAGIA_DIR)/Makefile
+	sed -i -E 's/^( *localparam int unsigned N_TILES_[XY][[:space:]]*=[[:space:]]*)[0-9]+;/\12;/' $(MAGIA_DIR)/hw/mesh/magia_pkg.sv
+else ifeq ($(target-platform), magia-4x4)
+	sed -i -E 's/^(num_cores[[:space:]]*\?=[[:space:]]*)[0-9]+/\116/' $(MAGIA_DIR)/Makefile
+	sed -i -E 's/^( *localparam int unsigned N_TILES_[XY][[:space:]]*=[[:space:]]*)[0-9]+;/\14;/' $(MAGIA_DIR)/hw/mesh/magia_pkg.sv
+else ifeq ($(target-platform), magia-8x8)
+	sed -i -E 's/^(num_cores[[:space:]]*\?=[[:space:]]*)[0-9]+/\164/' $(MAGIA_DIR)/Makefile
+	sed -i -E 's/^( *localparam int unsigned N_TILES_[XY][[:space:]]*=[[:space:]]*)[0-9]+;/\18;/' $(MAGIA_DIR)/hw/mesh/magia_pkg.sv
+else ifeq ($(target-platform), magia-16x16)
+	sed -i -E 's/^(num_cores[[:space:]]*\?=[[:space:]]*)[0-9]+/\1256/' $(MAGIA_DIR)/Makefile
+	sed -i -E 's/^( *localparam int unsigned N_TILES_[XY][[:space:]]*=[[:space:]]*)[0-9]+;/\116;/' $(MAGIA_DIR)/hw/mesh/magia_pkg.sv
+else
+	$(error unrecognized platform (acceptable platform: magia-2x2|4x4|8x8|16x16).)
+endif
+	cd $(MAGIA_DIR)									&& \
+	make python_venv || true						&& \
+	source setup_env.sh 							&& \
+	make python_deps || true						&& \
+	make bender										&& \
+	make update-ips > update-ips.log mesh_dv=1		&& \
+	make floonoc-patch || true						&& \
+	make build-hw > build-hw.log mesh_dv=1 			
+
