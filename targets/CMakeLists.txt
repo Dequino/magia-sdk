@@ -6,7 +6,7 @@
 # Viviane Potocnik <vivianep@iis.ee.ethz.ch>
 
 set(AVAILABLE_TARGETS
-  "magia-2x2"
+  "magia"
   CACHE STRING "Available Targets"
 )
 
@@ -18,6 +18,4 @@ endif()
 
 message(STATUS "[MAGIA-SDK] TARGET_PLATFORM       : ${TARGET_PLATFORM}")
 
-if (TARGET_PLATFORM STREQUAL "magia-2x2")
-  add_subdirectory(magia-2x2)
-endif()
+add_subdirectory(${TARGET_PLATFORM})

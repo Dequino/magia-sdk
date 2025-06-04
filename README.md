@@ -8,11 +8,13 @@ Magia and Magia-SDK are developed as part of the [PULP project](https://pulp-pla
 
 The following *optional* parameters can be specified when running the make command:
 
-`target_platform`: **magia-2x2**|**magia-4x4**|**magia-8x8**|**magia-16x16** (**Default**: magia-2x2). Selects the target platform to build and run tests on.
+`target_platform`: **magia** (**Default**: magia). Selects the target platform to build and run tests on. At the moment, only MAGIA is supported by the SDK.
 
 `compiler`: **GCC**|**LLVM** (**Default**: GCC). Selects the compiler to be used. LLVM is currently WIP.
 
 `platform`: **rtl**|**gvsoc** (**Default**: rtl). Selects the simulation platform. GVSoC is currently WIP.
+
+`tiles` : **2**|**4**|**8**|**16** (**Default**: 2). Selects number of rows and columns for the mesh architecture.
 
 `test_name`: Name of the test binary to be run.
 
@@ -26,7 +28,7 @@ The following *optional* parameters can be specified when running the make comma
         
         cd ../magia-sdk
 
-        make MAGIA <target-platform>
+        make MAGIA <target_platform> <tiles>
 
 3. Make sure the RISC-V GCC compiler is installed and visible in the `$PATH` environment variable. You can check if and where the compiler is installed by running the following command on your root (`/`) directory:
 
@@ -38,11 +40,11 @@ The following *optional* parameters can be specified when running the make comma
 
 4. To compile and build the test binaries for a desired architecture run:
 
-    `make clean build <target-platform> <compiler>`
+    `make clean build <target_platform> <tiles> <compiler>`
 
     To run one of the tests:
 
-    `make run test=<test_name> <platform>`
+    `make run test=<test_name> <platform> <tiles>`
 
 ## Adding your own test
 

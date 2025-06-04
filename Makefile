@@ -20,23 +20,26 @@
 
 SHELL 			:= /bin/bash
 
-BUILD_DIR 		:= ../MAGIA/work/sw/tests/$(test).c
-MAGIA_DIR 		:= ../MAGIA
-BIN 			:= $(BUILD_DIR)/verif
+BUILD_DIR 		?= ../MAGIA/work/sw/tests/$(test).c
+MAGIA_DIR 		?= ../MAGIA
+BIN 			?= $(BUILD_DIR)/verif
 
-target-platform := magia-2x2
-compiler 		:= GCC
-gui 			:= 0
+target_platform ?= magia
+compiler 		?= GCC
+gui 			?= 0
+tiles 			?= 2
 
+tiles_2 		:= $(shell echo $$(( $(tiles) * $(tiles) )))
 
 clean:
 	rm -rf build/
 
 build:
+	sed -i -E 's/^#define MESH_([XY])_TILES *\([0-9]+\)/#define MESH_\1_TILES $(tiles)/' ./targets/magia/include/addr_map/tile_addr_map.h
 ifeq ($(compiler), LLVM)
 	$(error COMING SOON!)
 endif
-	cmake -DTARGET_PLATFORM=$(target-platform) -DCOMPILER=$(compiler) -B build --trace-expand
+	cmake -DTARGET_PLATFORM=$(target_platform) -DCOMPILER=$(compiler) -B build --trace-expand
 	cmake --build build --verbose
 
 run: 
@@ -72,21 +75,12 @@ else
 	$(error Only rtl and gvsoc are supported as platforms.)
 endif
 
-MAGIA:
-ifeq ($(target-platform), magia-2x2)
-	sed -i -E 's/^(num_cores[[:space:]]*\?=[[:space:]]*)[0-9]+/\14/' $(MAGIA_DIR)/Makefile
-	sed -i -E 's/^( *localparam int unsigned N_TILES_[XY][[:space:]]*=[[:space:]]*)[0-9]+;/\12;/' $(MAGIA_DIR)/hw/mesh/magia_pkg.sv
-else ifeq ($(target-platform), magia-4x4)
-	sed -i -E 's/^(num_cores[[:space:]]*\?=[[:space:]]*)[0-9]+/\116/' $(MAGIA_DIR)/Makefile
-	sed -i -E 's/^( *localparam int unsigned N_TILES_[XY][[:space:]]*=[[:space:]]*)[0-9]+;/\14;/' $(MAGIA_DIR)/hw/mesh/magia_pkg.sv
-else ifeq ($(target-platform), magia-8x8)
-	sed -i -E 's/^(num_cores[[:space:]]*\?=[[:space:]]*)[0-9]+/\164/' $(MAGIA_DIR)/Makefile
-	sed -i -E 's/^( *localparam int unsigned N_TILES_[XY][[:space:]]*=[[:space:]]*)[0-9]+;/\18;/' $(MAGIA_DIR)/hw/mesh/magia_pkg.sv
-else ifeq ($(target-platform), magia-16x16)
-	sed -i -E 's/^(num_cores[[:space:]]*\?=[[:space:]]*)[0-9]+/\1256/' $(MAGIA_DIR)/Makefile
-	sed -i -E 's/^( *localparam int unsigned N_TILES_[XY][[:space:]]*=[[:space:]]*)[0-9]+;/\116;/' $(MAGIA_DIR)/hw/mesh/magia_pkg.sv
+MAGIA: 
+ifeq ($(target_platform), magia)
+	sed -i -E 's/^(num_cores[[:space:]]*\?=[[:space:]]*)[0-9]+/\1$(tiles_2)/' $(MAGIA_DIR)/Makefile
+	sed -i -E 's/^( *localparam int unsigned N_TILES_[XY][[:space:]]*=[[:space:]]*)[0-9]+;/\1$(tiles);/' $(MAGIA_DIR)/hw/mesh/magia_pkg.sv
 else
-	$(error unrecognized platform (acceptable platform: magia-2x2|4x4|8x8|16x16).)
+	$(error unrecognized platform (acceptable platform: magia).)
 endif
 	cd $(MAGIA_DIR)									&& \
 	make python_venv || true						&& \

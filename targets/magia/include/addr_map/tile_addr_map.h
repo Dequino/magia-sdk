@@ -19,8 +19,8 @@
 #define TEST_END_ADDR  (0xCC030000)
 #define MOCK_UART_ADDR (0xCC008000)
 
-#define MESH_X_TILES (2)
-#define MESH_Y_TILES (2)
+#define MESH_X_TILES 4
+#define MESH_Y_TILES 4
 #define NUM_HARTS    (MESH_X_TILES*MESH_Y_TILES)
 
 #define STR_OFFSET  (0x00000000)
