@@ -30,12 +30,14 @@ gui 			?= 0
 tiles 			?= 2
 
 tiles_2 		:= $(shell echo $$(( $(tiles) * $(tiles) )))
+tiles_log    	:= $(shell awk 'BEGIN { printf "%.0f", log($(tiles_2))/log(2) }')
 
 clean:
 	rm -rf build/
 
 build:
-	sed -i -E 's/^#define MESH_([XY])_TILES *\([0-9]+\)/#define MESH_\1_TILES $(tiles)/' ./targets/magia/include/addr_map/tile_addr_map.h
+	sed -i -E 's/^#define MESH_([XY])_TILES[[:space:]]*[0-9]+/#define MESH_\1_TILES $(tiles)/' ./targets/magia/include/addr_map/tile_addr_map.h
+	sed -i -E 's/^(#define MAX_SYNC_LVL[[:space:]]*)[0-9]+/\1$(tiles_log)/' ./targets/magia/include/addr_map/tile_addr_map.h
 ifeq ($(compiler), LLVM)
 	$(error COMING SOON!)
 endif
@@ -47,7 +49,7 @@ run:
 	@echo 'please run "source setup_env.sh" in the magia folder before running this script'
 	@echo 'and make sure the risc-v objdump binary is visible on path using "which riscv32-unknown-elf-objdump".'
 ifndef test
-	$(error Proper formatting is: make run test=<test_name> platform=rtl|gvsoc <num_cores=x>)
+	$(error Proper formatting is: make run test=<test_name> platform=rtl|gvsoc)
 endif
 ifeq (,$(wildcard ./build/bin/$(test)))
 	$(error No test found with name: $(test))

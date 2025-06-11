@@ -21,4 +21,5 @@ target_link_libraries(hal
   PUBLIC
     "idma_lib"
     "redmule_lib"
+    "fsync_lib"
 )

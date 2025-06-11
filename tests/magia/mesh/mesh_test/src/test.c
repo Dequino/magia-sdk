@@ -12,7 +12,7 @@
 #include "redmule.h"
 
 /**
- * This test splits a GEMM into the 4 tiles of the 2x2 MAGIA mesh architecture and then checks its correctness.
+ * This test splits a GEMM into the N^2 tiles of the NxN MAGIA mesh architecture and then checks its correctness.
  * This test has been written to be compatible to any mesh and input dimensions.
  * The workload has been split as evenly as possible on each tile, dividing it on the output dimensions.
  * I.E. Each tile of a 2x2 computes one of the four corners of the output matrix (tile 0 the top left corner, tile 3 the bottom right).
