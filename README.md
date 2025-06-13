@@ -10,11 +10,15 @@ The following *optional* parameters can be specified when running the make comma
 
 `target_platform`: **magia** (**Default**: magia). Selects the target platform to build and run tests on. At the moment, only MAGIA is supported by the SDK.
 
+`build_mode`: **update**|**profile**|**synth** (**Default**: update). Selects the mode that the MAGIA architecture is built.
+
+`fsync_mode`: **stall**|**interrupt** (**Default** stall). Selects the Fractal Sync module synchronization behaviour.
+
 `compiler`: **GCC**|**LLVM** (**Default**: GCC). Selects the compiler to be used. LLVM is currently WIP.
 
 `platform`: **rtl**|**gvsoc** (**Default**: rtl). Selects the simulation platform. GVSoC is currently WIP.
 
-`tiles` : **2**|**4**|**8**|**16** (**Default**: 2). Selects number of rows and columns for the mesh architecture.
+`tiles`: **2**|**4**|**8**|**16** (**Default**: 2). Selects number of rows and columns for the mesh architecture.
 
 `test_name`: Name of the test binary to be run.
 
@@ -28,7 +32,7 @@ The following *optional* parameters can be specified when running the make comma
         
         cd ../magia-sdk
 
-        make MAGIA <target_platform> <tiles>
+        make MAGIA <target_platform> <tiles> <build_mode> <fsync_mode>
 
 3. Make sure the RISC-V GCC compiler is installed and visible in the `$PATH` environment variable. You can check if and where the compiler is installed by running the following command on your root (`/`) directory:
 

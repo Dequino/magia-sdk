@@ -1,12 +1,30 @@
+#include <stdint.h>
+
 #include "test.h"
 #include "tile.h"
 #include "fsync.h"
 
 /**
  * Writes a value to the L1 memory address to be used to verify correct synchronization.
- * 
+ * Delays the write by an increasing number of nops depending on the core id.
  */
-int write_delayed(uint8_t lvl, uint32_t id, uint32_t addr){
+int write_delayed(uint8_t lvl, uint32_t id, uint32_t x, uint32_t y, uint32_t addr){
+    uint8_t val = (uint8_t)((x >> ((lvl + 2) / 2)) + ((y >> ((lvl + 1) / 2))*(MESH_X_TILES >> ((lvl + 2) / 2))));
+    wait_nop(100 * id);
+    mmio8(addr) = val;
+    return 0;
+}
+
+/**
+ * Compares the value written in L1 memory with the value written in L1 memory of the tile_0 of the same synched mesh area.
+ */
+int check_values(uint8_t lvl, uint32_t id, uint32_t x, uint32_t y, uint32_t addr){
+    uint8_t val = *(volatile uint8_t*)(addr);
+    uint8_t id_0 = (((val % (MESH_X_TILES >> ((lvl + 2) / 2))) << ((lvl + 2) / 2)) + (((val / (MESH_X_TILES >> ((lvl + 2) / 2))) << ((lvl + 1) / 2)) * MESH_X_TILES));
+    uint8_t val_0 = *(volatile uint8_t*)(L1_BASE + (id_0 * L1_TILE_OFFSET));
+    if(val_0 != val){
+        printf("Error detected at sync level %d - val is: %d but val_0 (id_0:%d) is %d", lvl, val, id_0, val_0);
+    }
     return 0;
 }
 
@@ -40,11 +58,26 @@ int main(void){
      * Increasing the synchronization level increases the mesh area that has to be synchronized.
      */
     for(uint8_t i = 0; i < MAX_SYNC_LVL; i++){
-        write_delayed(i, hartid, l1_tile_base);
+        /**
+        * 1_a. Synchronize before write (waits the read of the previous cycle).
+        */
+        fsync_sync(&fsync_ctrl, (uint32_t) i);
+
+        /**
+        * 1_b. Write value.
+        */
+        write_delayed(i, hartid, x_id, y_id, l1_tile_base);
+
+        /**
+        * 1_c. Synchronize on the current level.
+        */
+        fsync_sync(&fsync_ctrl, (uint32_t) i);
+
+        /**
+        * 1_d. Check if the other tiles have written the correct value.
+        */
+        check_values(i, hartid, x_id, y_id, l1_tile_base);    
     }
-    int test_int = -123;
-    
-    printf("Hello world! %d", test_int);
 
     magia_return(hartid, PASS_EXIT_CODE);
     

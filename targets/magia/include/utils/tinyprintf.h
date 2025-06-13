@@ -114,7 +114,7 @@ regs Kusti, 23.10.2004
 #define _TINYPRINTF_INCLUDE_GUARD_
 
 static void putf(char *null, char c) {
-  *(volatile uint8_t *) (MOCK_UART_ADDR) = (uint8_t)c;
+  *(volatile uint8_t *) (PRINT_ADDR) = (uint8_t)c;
 }
 
 #ifndef __TFP_PRINTF__

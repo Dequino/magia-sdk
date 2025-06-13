@@ -18,11 +18,12 @@
 #define L2_BASE        (0xCC000000)
 #define TEST_END_ADDR  (0xCC030000)
 #define MOCK_UART_ADDR (0xCC008000)
+#define PRINT_ADDR     (0xFFFF0004)
 
-#define MESH_X_TILES 8
-#define MESH_Y_TILES 8
+#define MESH_X_TILES 4
+#define MESH_Y_TILES 4
 #define NUM_HARTS    (MESH_X_TILES*MESH_Y_TILES)
-#define MAX_SYNC_LVL 6
+#define MAX_SYNC_LVL 4
 
 #define STR_OFFSET  (0x00000000)
 #define STR_BASE    (RESERVED_START + STR_OFFSET)

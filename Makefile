@@ -23,6 +23,8 @@ SHELL 			:= /bin/bash
 BUILD_DIR 		?= ../MAGIA/work/sw/tests/$(test).c
 MAGIA_DIR 		?= ../MAGIA
 BIN 			?= $(BUILD_DIR)/verif
+build_mode		?= update
+fsync_mode		?= stall
 
 target_platform ?= magia
 compiler 		?= GCC
@@ -84,12 +86,24 @@ ifeq ($(target_platform), magia)
 else
 	$(error unrecognized platform (acceptable platform: magia).)
 endif
-	cd $(MAGIA_DIR)									&& \
-	make python_venv || true						&& \
-	source setup_env.sh 							&& \
-	make python_deps || true						&& \
-	make bender										&& \
-	make update-ips > update-ips.log mesh_dv=1		&& \
-	make floonoc-patch || true						&& \
-	make build-hw > build-hw.log mesh_dv=1 			
+ifeq ($(fsync_mode), stall)
+	sed -i -E "s/^(parameter bit[[:space:]]+FSYNC_STALL[[:space:]]+= )[01];/\11;/" $(MAGIA_DIR)/hw/tile/magia_tile_pkg.sv
+else ifeq ($(fsync_mode), interrupt)
+	sed -i -E "s/^(parameter bit[[:space:]]+FSYNC_STALL[[:space:]]+= )[01];/\10;/" $(MAGIA_DIR)/hw/tile/magia_tile_pkg.sv
+else
+	$(error unrecognized fractal sync mode (acceptable modes: stall|interrupt).)
+endif
+ifneq (,$(filter $(build_mode), update synth profile))
+	cd $(MAGIA_DIR)												&& \
+	make python_venv || true									&& \
+	source setup_env.sh 										&& \
+	make python_deps || true									&& \
+	make bender													&& \
+	make $(build_mode)-ips > $(build_mode)-ips.log mesh_dv=1	&& \
+	make floonoc-patch || true									&& \
+	make build-hw > build-hw.log mesh_dv=1
+else
+	$(error unrecognized mode (acceptable build modes: update|profile|synth).)
+endif
+
 

@@ -4,6 +4,7 @@
 #include "addr_map/tile_addr_map.h"
 #include "utils/fsync_isa_utils.h"
 #include "utils/tinyprintf.h"
+#include "utils/magia_utils.h"
 
 int fsync32_init(fsync_controller_t *ctrl) {
     irq_en(1<<IRQ_FSYNC_DONE);
@@ -23,8 +24,10 @@ int fsync32_sync(fsync_controller_t *ctrl, uint32_t level){
         printf("Error: synchronization level is too high! Maximum level is: %d", MAX_SYNC_LVL);
         return 1;
     }
-    fsync(1 << (level));
-    asm volatile("wfi" ::: "memory");
+    //printf("Calling sync level %d", level);
+    fsync((uint8_t) (1 << (level)));
+    //asm volatile("wfi" ::: "memory");
+    return 0;
 }
 
 extern int fsync_init(fsync_controller_t *ctrl)
