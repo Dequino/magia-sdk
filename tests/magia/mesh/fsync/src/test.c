@@ -7,6 +7,9 @@
 /**
  * Writes a value to the L1 memory address to be used to verify correct synchronization.
  * Delays the write by an increasing number of nops depending on the core id.
+ * The value written is calculated based on the tile's X and Y position in the mesh and the current synchronization level.
+ * The value is a "mock-id" of the synchronized area the tile is part of.
+ * Refer to MAGIA pubblication and documentation for a detailed explanation of the different synchronization level geometries. 
  */
 int write_delayed(uint8_t lvl, uint32_t id, uint32_t x, uint32_t y, uint32_t addr){
     uint8_t val = (uint8_t)((x >> ((lvl + 2) / 2)) + ((y >> ((lvl + 1) / 2))*(MESH_X_TILES >> ((lvl + 2) / 2))));
@@ -17,6 +20,7 @@ int write_delayed(uint8_t lvl, uint32_t id, uint32_t x, uint32_t y, uint32_t add
 
 /**
  * Compares the value written in L1 memory with the value written in L1 memory of the tile_0 of the same synched mesh area.
+ * To locate which tile is the tile_0, the value stored in L1 (the "mock-id") is used to calculate the X and Y of tile_0 (and its ID).
  */
 int check_values(uint8_t lvl, uint32_t id, uint32_t x, uint32_t y, uint32_t addr){
     uint8_t val = *(volatile uint8_t*)(addr);
