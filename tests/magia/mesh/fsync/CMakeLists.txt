@@ -1,3 +1,11 @@
+# Copyright 2024-2025 ETH Zurich and University of Bologna.
+# Licensed under the Apache License, Version 2.0, see LICENSE for details.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Moritz Scherer <scheremo@iis.ee.ethz.ch>
+# Philip Wiese <wiesep@iis.ee.ethz.ch>
+# Alberto Dequino <alberto.dequino@unibo.it>
+
 set(TEST_NAME test_fsync)
 
 file(GLOB_RECURSE TEST_SRCS

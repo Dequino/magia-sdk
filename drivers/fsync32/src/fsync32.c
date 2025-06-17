@@ -1,3 +1,16 @@
+// Copyright 2025 ETH Zurich and University of Bologna.
+// Licensed under the Apache License, Version 2.0, see LICENSE for details.
+// SPDX-License-Identifier: Apache-2.0
+//
+// Viviane Potocnik <vivianep@iis.ee.ethz.ch>
+// Alberto Dequino <alberto.dequino@unibo.it>
+//
+// This file provides the strong (driver-specific) implementations for the
+// Fractal Sync functions using 32-bits levels.
+// These functions override the weak HAL symbols.
+// This is a WIP and might be redundant, as the moment of writing there is only one FSync configuration tested on MAGIA.
+
+
 #include <stdint.h>
 #include "fsync32.h"
 #include "regs/tile_ctrl.h"
@@ -16,6 +29,7 @@ int fsync32_init(fsync_controller_t *ctrl) {
  * Level 0 will synchronize with the neighbor tile.
  * Increasing the level will synchronize with more neighborhoods.
  * At maximum level (log_2(N_tiles)) the entire mesh is synchronized.
+ * Uncomment the asm volatile line only if you enabled interrupt mode when building the MAGIA architecture.
  *
  * @param level Tree level over which synchronize.
  */
