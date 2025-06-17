@@ -22,17 +22,19 @@ The following *optional* parameters can be specified when running the make comma
 
 `test_name`: Name of the test binary to be run.
 
-1. Clone the [MAGIA](https://github.com/pulp-platform/MAGIA/tree/main) repository in the same directory of magia-sdk:
+0. In case you are using this SDK as non-submodule: Clone the [MAGIA](https://github.com/pulp-platform/MAGIA/tree/main) repository:
 
-        cd ..
+    `git clone git@github.com:pulp-platform/MAGIA.git`
 
-        git clone git@github.com:pulp-platform/MAGIA.git
+    Then modify the magia-sdk **Makefile** to point to the correct paths:
+
+        MAGIA_DIR ?= path/to/MAGIA/repository
+
+        BUILD_DIR ?= $(MAGIA_DIR)//work/sw/tests/$(test).c
 
 2. Build the Magia architecture (*this command may take time and return an error, please be patient.*):
         
-        cd ../magia-sdk
-
-        make MAGIA <target_platform> <tiles> <build_mode> <fsync_mode>
+    `make MAGIA <target_platform> <tiles> <build_mode> <fsync_mode>`
 
 3. Make sure the RISC-V GCC compiler is installed and visible in the `$PATH` environment variable. You can check if and where the compiler is installed by running the following command on your root (`/`) directory:
 
@@ -48,7 +50,7 @@ The following *optional* parameters can be specified when running the make comma
 
     To run one of the tests:
 
-    `make run test=<test_name> <platform> <tiles>`
+    `make run test=<test_name> <platform>`
 
 ## Adding your own test
 

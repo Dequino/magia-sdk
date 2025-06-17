@@ -20,8 +20,8 @@
 
 SHELL 			:= /bin/bash
 
-BUILD_DIR 		?= ../MAGIA/work/sw/tests/$(test).c
-MAGIA_DIR 		?= ../MAGIA
+BUILD_DIR 		?= ../work/sw/tests/$(test).c
+MAGIA_DIR 		?= ../
 BIN 			?= $(BUILD_DIR)/verif
 build_mode		?= update
 fsync_mode		?= stall
@@ -73,7 +73,7 @@ else ifeq ($(platform), rtl)
 	riscv32-unknown-elf-objdump -d -S $(BIN) > $(BIN).dump
 	riscv32-unknown-elf-objdump -d -l -s $(BIN) > $(BIN).objdump
 	python3 scripts/objdump2itb.py $(BIN).objdump > $(BIN).itb
-	cd ../MAGIA 													&& \
+	cd $(MAGIA_DIR) 												&& \
 	make run test=$(test) gui=$(gui)
 else
 	$(error Only rtl and gvsoc are supported as platforms.)
