@@ -8,11 +8,16 @@
  * Writes a value to the L1 memory address to be used to verify correct synchronization.
  * Delays the write by an increasing number of nops depending on the core id.
  * The value written is calculated based on the tile's X and Y position in the mesh and the current synchronization level.
- * The value is a "mock-id" of the synchronized area the tile is part of.
+ * The value is a "mock-id" of the synchronized area the tile is part of, plus an offset depending of the current sync level.
  * Refer to MAGIA pubblication and documentation for a detailed explanation of the different synchronization level geometries. 
  */
 int write_delayed(uint8_t lvl, uint32_t id, uint32_t x, uint32_t y, uint32_t addr){
     uint8_t val = (uint8_t)((x >> ((lvl + 2) / 2)) + ((y >> ((lvl + 1) / 2))*(MESH_X_TILES >> ((lvl + 2) / 2))));
+    if(lvl){
+        for(uint8_t i = lvl; i > 0; i--){
+            val += (NUM_HARTS >> i);
+        }
+    }
     wait_nop(100 * id);
     mmio8(addr) = val;
     return 0;
@@ -24,12 +29,22 @@ int write_delayed(uint8_t lvl, uint32_t id, uint32_t x, uint32_t y, uint32_t add
  */
 int check_values(uint8_t lvl, uint32_t id, uint32_t x, uint32_t y, uint32_t addr){
     uint8_t val = *(volatile uint8_t*)(addr);
-    uint8_t id_0 = (((val % (MESH_X_TILES >> ((lvl + 2) / 2))) << ((lvl + 2) / 2)) + (((val / (MESH_X_TILES >> ((lvl + 2) / 2))) << ((lvl + 1) / 2)) * MESH_X_TILES));
+    uint8_t val2 = val;
+    if(lvl){
+        for(uint8_t i = lvl; i > 0; i--){
+            val2 = val2 - (NUM_HARTS >> i);
+        }
+    }
+    uint8_t id_0 = (((val2 % (MESH_X_TILES >> ((lvl + 2) / 2))) << ((lvl + 2) / 2)) + (((val2 / (MESH_X_TILES >> ((lvl + 2) / 2))) << ((lvl + 1) / 2)) * MESH_X_TILES));
     uint8_t val_0 = *(volatile uint8_t*)(L1_BASE + (id_0 * L1_TILE_OFFSET));
+    uint8_t flag = 0;
     if(val_0 != val){
         printf("Error detected at sync level %d - val is: %d but val_0 (id_0:%d) is %d", lvl, val, id_0, val_0);
+        flag = 1;
     }
-    return 0;
+    //else
+        //printf("DEBUG lvl %d - val_0:%d val:%d", lvl, val_0, val);
+    return flag;
 }
 
 /**
@@ -56,12 +71,14 @@ int main(void){
     uint32_t y_id = GET_Y_ID(hartid);
     uint32_t x_id = GET_X_ID(hartid);
     uint32_t l1_tile_base = L1_BASE + hartid * L1_TILE_OFFSET;
+    uint8_t flag = 0;
 
     /**
      * 1. Cycle over the synchronization levels.
      * Increasing the synchronization level increases the mesh area that has to be synchronized.
      */
     for(uint8_t i = 0; i < MAX_SYNC_LVL; i++){
+        //printf("Entering synchronization level %d", i);
         /**
         * 1_a. Synchronize before write (waits the read of the previous cycle).
         */
@@ -80,7 +97,12 @@ int main(void){
         /**
         * 1_d. Check if the other tiles have written the correct value.
         */
-        check_values(i, hartid, x_id, y_id, l1_tile_base);    
+        if(check_values(i, hartid, x_id, y_id, l1_tile_base))
+            flag=1;    
+    }
+
+    if(!flag){
+        printf("No errors detected for all synchronization levels! (MAX LEVEL: %d)\n", (MAX_SYNC_LVL-1));
     }
 
     magia_return(hartid, PASS_EXIT_CODE);
